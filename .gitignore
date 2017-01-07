@@ -27,3 +27,10 @@
 *.exe
 *.out
 *.app
+
+# Build directory
+build
+
+# Qt user file
+CMakeLists.txt.user
+
