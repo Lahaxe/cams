@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cams_gui::Menu</class>
+ <class>cams_gui::menu::Menu</class>
  <widget class="QWidget" name="Menu">
   <property name="geometry">
    <rect>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="4">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="user_btn">
      <property name="minimumSize">
       <size>
        <width>80</width>
@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item row="0" column="0">
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="cams_btn">
      <property name="minimumSize">
       <size>
        <width>80</width>
@@ -53,7 +53,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="menu_btn">
      <property name="minimumSize">
       <size>
        <width>80</width>
@@ -85,7 +85,7 @@
     </spacer>
    </item>
    <item row="0" column="3">
-    <widget class="QPushButton" name="pushButton_4">
+    <widget class="QPushButton" name="notification_btn">
      <property name="minimumSize">
       <size>
        <width>80</width>

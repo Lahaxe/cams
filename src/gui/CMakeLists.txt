@@ -22,6 +22,7 @@ GroupFiles(Forms_Files)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/../lib
+                    ${CMAKE_SOURCE_DIR}/../rompp/src/
                     ${Boost_INCLUDE_DIRS}
                     ${CMAKE_CURRENT_BINARY_DIR})
 

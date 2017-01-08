@@ -1,3 +1,7 @@
+
+// Include Rompp files
+#include <rompp/logger/Logger.h>
+
 // Include Qt files
 #include <qdesktopwidget.h>
 

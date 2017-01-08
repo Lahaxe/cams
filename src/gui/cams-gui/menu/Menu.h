@@ -7,6 +7,9 @@
 namespace cams_gui
 {
 
+namespace menu
+{
+
 namespace Ui {
 class Menu;
 }
@@ -20,9 +23,14 @@ public:
 
     virtual ~Menu();
 
+private slots:
+    void on_user_btn_clicked();
+
 private:
     Ui::Menu * _ui;
 };
+
+} // namespace menu
 
 } // namespace cams_gui
 
