@@ -7,6 +7,7 @@
 // Include Rompp files
 #include <rompp/logger/Logger.h>
 
+// Include Project files
 #include "cams-gui/MainWindow.h"
 
 int main(int argc, char *argv[])
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationName("cams-gui");
 
         // Create main frame
-        MainWindow frame;
+        cams_gui::MainWindow frame;
         //frame.Initialize();
         frame.show();
 

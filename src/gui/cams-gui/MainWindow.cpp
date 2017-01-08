@@ -1,14 +1,30 @@
+// Include Qt files
+#include <qdesktopwidget.h>
+
+// Include Project files
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+namespace cams_gui
 {
-    ui->setupUi(this);
+
+MainWindow
+::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    _ui(new Ui::MainWindow)
+{
+    this->_ui->setupUi(this);
+
+    this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+
+    // Resize to fullscreen
+    this->resize(QDesktopWidget().availableGeometry(this).size());
 }
 
-MainWindow::~MainWindow()
+MainWindow
+::~MainWindow()
 {
-    delete ui;
+    delete this->_ui;
 }
+
+} // namespace cams_gui

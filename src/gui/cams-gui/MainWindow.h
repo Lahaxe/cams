@@ -1,7 +1,11 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef _9162810b_73fd_4f92_9c12_53cff547cbcc
+#define _9162810b_73fd_4f92_9c12_53cff547cbcc
 
+// Include Qt Files
 #include <QMainWindow>
+
+namespace cams_gui
+{
 
 namespace Ui {
 class MainWindow;
@@ -13,10 +17,14 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+
+    virtual ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow * _ui;
+
 };
 
-#endif // MAINWINDOW_H
+} // namespace cams_gui
+
+#endif // _9162810b_73fd_4f92_9c12_53cff547cbcc
