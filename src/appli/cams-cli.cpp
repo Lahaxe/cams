@@ -8,18 +8,25 @@
 
 int main(int argc, char *argv[])
 {
+    auto logger = Logger::instance();
     try
     {
-        initialize_log();
+        logger.initialize_default("DEBUG");
 
-        LOGGER_INFO << "Begin " << std::string(argv[0]);
+        std::stringstream message;
+        message << "Begin " << std::string(argv[0]);
+        logger.info(message.str());
     }
     catch (std::exception & exc)
     {
-        LOGGER_FATAL << exc.what();
+        std::stringstream message;
+        message << exc.what();
+        logger.fatal(message.str());
     }
 
-    LOGGER_INFO << "End " << std::string(argv[0]);
+    std::stringstream message;
+    message << "End " << std::string(argv[0]);
+    logger.info(message.str());
 
     return EXIT_SUCCESS;
 }
