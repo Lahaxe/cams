@@ -19,7 +19,15 @@ namespace cams.Controllers
             Repository = repository;
         }
 
-        // GET api/<controller>
+        /// <summary>
+        /// Get a list of <see cref="User"/>.
+        /// </summary>
+        /// <returns>List of <see cref="User"/></returns>
+        /// <response code="200">Return the pagined list of <see cref="User"/>.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Authentication required.</response>
+        /// <response code="403">Action not Allowed.</response>
+        /// <response code="500">Internal Server Error.</response>
         [ResponseType(typeof(PagedCollection<User>))]
         public IHttpActionResult GetUsersList()
         {
