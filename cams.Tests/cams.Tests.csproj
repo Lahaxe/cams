@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Users\UserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\ValuesControllerTest.cs" />
@@ -109,6 +110,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\cams.model\cams.Model.csproj">
+      <Project>{77E25450-106C-461A-831E-C0161134FEA4}</Project>
+      <Name>cams.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\cams\cams.csproj">
       <Project>{28C78241-27F4-4048-BD4B-B4873E7B9519}</Project>
       <Name>cams</Name>
