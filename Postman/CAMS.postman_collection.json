@@ -1,0 +1,217 @@
+{
+	"info": {
+		"name": "CAMS",
+		"_postman_id": "b9e23ed9-2b53-d618-7bbb-0b6d7ec93c59",
+		"description": "Requests to test CAMS-API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{baseURL}}",
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7a28d239-92f2-41c4-bd45-f2371b4a27d4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e65b41f8-cf6a-48c8-902c-28d09f50d4b8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"description": "",
+			"item": [
+				{
+					"name": "items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{baseURL}}",
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Collections",
+			"description": "",
+			"item": [
+				{
+					"name": "collections",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{baseURL}}",
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9e79ce26-c139-440c-a644-7fe6b63fd302",
+						"type": "text/javascript",
+						"exec": [
+							"postman.clearEnvironmentVariable(\"token\");",
+							"postman.clearEnvironmentVariable(\"token_type\");",
+							"postman.clearEnvironmentVariable(\"username\");",
+							"postman.clearEnvironmentVariable(\"lang\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "acdad677-e95f-4d38-847f-85ef1a625d5d",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"if (responseCode.code === 200)",
+							"{",
+							"    var data = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"token\", data.access_token);",
+							"    postman.setEnvironmentVariable(\"token_type\", data.token_type);",
+							"    postman.setEnvironmentVariable(\"username\", data.username);",
+							"    postman.setEnvironmentVariable(\"lang\", data.lang);",
+							"    ",
+							"    tests[\"Token is valid\"] = (data.access_token !== undefined && data.access_token !== null)",
+							"    tests[\"Lang is valid\"] = (data.lang !== undefined && data.lang !== null)",
+							"    ",
+							"    if (data.extendedProperties !== undefined && data.extendedProperties !== null)",
+							"    {",
+							"        var extendedProperties = JSON.parse(data.extendedProperties);",
+							"    }",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{login}}",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{server}}:{{port}}/token",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"token"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
