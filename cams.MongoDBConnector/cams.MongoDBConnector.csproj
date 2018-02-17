@@ -67,6 +67,7 @@
     <Compile Include="Core\EntityBaseExtensions.cs" />
     <Compile Include="Core\RepositoryBase.cs" />
     <Compile Include="Items\ItemRepository.cs" />
+    <Compile Include="Items\Stamps\StampRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessions\IMongoDBSession.cs" />
     <Compile Include="Sessions\IMongoDBSessionFactory.cs" />

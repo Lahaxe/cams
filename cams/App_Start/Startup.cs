@@ -1,8 +1,10 @@
 ﻿using cams.model.Collections;
 using cams.model.Items;
+using cams.model.Items.Stamps;
 using cams.model.Users;
 using cams.MongoDBConnector.Collections;
 using cams.MongoDBConnector.Items;
+using cams.MongoDBConnector.Items.Stamps;
 using cams.MongoDBConnector.Sessions;
 using cams.MongoDBConnector.Users;
 using Microsoft.Owin;
@@ -33,6 +35,9 @@ namespace cams
             container.RegisterType<ICollectionRepository, CollectionRepository>(new InjectionConstructor(typeof(IMongoDBSessionFactory)));
             // Register Item Repository
             container.RegisterType<IItemRepository, ItemRepository>(new InjectionConstructor(typeof(IMongoDBSessionFactory)));
+
+            // Register Stamp Repository
+            container.RegisterType<IStampRepository, StampRepository>(new InjectionConstructor(typeof(IMongoDBSessionFactory)));
 
             DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver =
