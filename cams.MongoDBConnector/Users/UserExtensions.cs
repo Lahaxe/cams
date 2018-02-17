@@ -21,8 +21,10 @@ namespace cams.MongoDBConnector.Users
                 return null;
             }
 
+            // Initialize base class
             var user = bson.ToEntityBase<User>();
 
+            // Read data from bson
             user.Name = bson.GetElement("name").Value.AsString;
 
             return user;
