@@ -49,6 +49,7 @@
     <Compile Include="Core\ISessionFactory.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\PagedCollection.cs" />
+    <Compile Include="Exceptions\CamsException.cs" />
     <Compile Include="Items\IItemRepository.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemType.cs" />

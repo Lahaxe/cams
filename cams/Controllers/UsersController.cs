@@ -28,6 +28,7 @@ namespace cams.Controllers
         /// <response code="401">Authentication required.</response>
         /// <response code="403">Action not Allowed.</response>
         /// <response code="500">Internal Server Error.</response>
+        [Route("")]
         [ResponseType(typeof(PagedCollection<User>))]
         public IHttpActionResult GetUsersList()
         {
@@ -49,7 +50,18 @@ namespace cams.Controllers
             }
         }
 
-        // GET api/<controller>/{id}
+        /// <summary>
+        /// Gets an user by Id.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        /// <returns>The requested user.</returns>
+        /// <response code="200">Return the <see cref="User"/>.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Authentication required.</response>
+        /// <response code="403">Action not Allowed.</response>
+        /// <response code="404">The resource code given in the URI does not correspond to any existing user.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [Route("{id}")]
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(string id)
         {
