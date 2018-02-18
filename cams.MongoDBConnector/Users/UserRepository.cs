@@ -64,8 +64,14 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            // TODO
-            return new User();
+            var result = Session.Read("users", id);
+
+            if (result == null || result.IsBsonNull)
+            {
+                throw new UserNotFoundException();
+            }
+            
+            return result.ToUser();
         }
     }
 }

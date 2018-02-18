@@ -44,5 +44,15 @@ namespace cams.MongoDBConnector.Sessions
             result.Wait();
             return result.Result;
         }
+
+        public BsonDocument Read(string collectionName, string id)
+        {
+            var collection = _database.GetCollection<BsonDocument>(collectionName);
+            var bsondoc = new BsonDocument();
+            bsondoc.Add("id", BsonValue.Create(id));
+            var result = collection.Find(bsondoc).FirstOrDefaultAsync();
+            result.Wait();
+            return result.Result;
+        }
     }
 }
