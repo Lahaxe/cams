@@ -1,50 +1,51 @@
-﻿using System;
+﻿using cams.model.Exceptions;
+using System;
 using System.Runtime.Serialization;
 
-namespace cams.model.Exceptions
+namespace cams.model.Users
 {
     /// <summary>
-    /// Base class for all specific CAMS exceptions.
+    /// Exception thrown when <see cref="User"/> was not found.
     /// </summary>
     [Serializable]
-    public class CamsException : Exception
+    public class UserNotFoundException : CamsException
     {
         /// <summary>
-        /// Initialize a new instance of <see cref="CamsException"/>.
+        /// Initialize a new instance of <see cref="UserNotFoundException"/>.
         /// </summary>
-        public CamsException()
+        public UserNotFoundException()
             : base()
         {
         }
 
         /// <summary>
-        /// Initialize a new instance of <see cref="CamsException"/>.
+        /// Initialize a new instance of <see cref="UserNotFoundException"/>.
         /// </summary>
         /// <param name="message">The custom exception message.</param>
-        public CamsException(string message)
+        public UserNotFoundException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initialize a new instance of <see cref="CamsException"/>.
+        /// Initialize a new instance of <see cref="UserNotFoundException"/>.
         /// </summary>
         /// <param name="message">The custom exception message.</param>
         /// <param name="innerException">The inner exception.</param>
-        public CamsException(string message, Exception innerException)
+        public UserNotFoundException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
         /// <summary>
-        /// Initialize a new instance of <see cref="CamsException"/> with serialization context.
+        /// Initialize a new instance of <see cref="UserNotFoundException"/> with serialization context.
         /// </summary>
         /// <remarks>
         /// Used for object deserialization.
         /// </remarks>
         /// <param name="info">The <see cref="SerializationInfo"/>.</param>
         /// <param name="context">The <see cref="StreamingContext"/>.</param>
-        protected CamsException(SerializationInfo info, StreamingContext context)
+        protected UserNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

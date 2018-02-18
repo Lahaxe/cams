@@ -67,7 +67,7 @@ namespace cams.Controllers
         {
             try
             {
-                return Ok(Repository.GetUser());
+                return Ok(Repository.GetUser(id));
             }
             catch (ArgumentException aex)
             {
@@ -76,6 +76,10 @@ namespace cams.Controllers
             catch (SecurityException)
             {
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound();
             }
             catch (Exception ex)
             {
