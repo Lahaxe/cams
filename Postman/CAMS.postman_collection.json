@@ -11,6 +11,64 @@
 			"description": "",
 			"item": [
 				{
+					"name": "{id}",
+					"description": "",
+					"item": [
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7e644339-c91f-4542-8721-1ec56352757f",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of User\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.id !== undefined && data.id !== null) {",
+											"        throw { message : \"'id' is missing in User structure\" };",
+											"    }",
+											"    ",
+											"    if (data.name !== undefined && data.name !== null) {",
+											"        throw { message : \"'name' is missing in User structure\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users/idtest",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users",
+										"idtest"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "users",
 					"event": [
 						{
@@ -169,11 +227,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "acdad677-e95f-4d38-847f-85ef1a625d5d",
+						"id": "2b5f5b11-cf95-4c20-9f5e-1e6ab1bb33e4",
 						"type": "text/javascript",
 						"exec": [
-							"tests[\"Status code is 200\"] = responseCode.code === 200;",
-							"",
 							"if (responseCode.code === 200)",
 							"{",
 							"    var data = JSON.parse(responseBody);",

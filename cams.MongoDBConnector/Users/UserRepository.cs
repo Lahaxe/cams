@@ -17,8 +17,8 @@ namespace cams.MongoDBConnector.Users
         /// Create a new instance of <see cref="UserRepository"/>.
         /// </summary>
         /// <param name="factory">The mongodb session factory.</param>
-        public UserRepository(IMongoDBSessionFactory factory):
-            base(factory)
+        public UserRepository(IMongoDBSessionFactory factory)
+            : base(factory)
         {
 
         }
@@ -55,16 +55,23 @@ namespace cams.MongoDBConnector.Users
         /// <summary>
         /// Get a <see cref="User"/> by Id.
         /// </summary>
+        /// <param name="id">The user identifier.</param>
         /// <returns>The requested <see cref="User"/>.</returns>
-        public User GetUser()
+        public User GetUser(string id)
         {
             if (Session == null)
             {
                 throw new Exception("Session is null");
             }
 
-            // TODO
-            return new User();
+            var result = Session.Read("users", id);
+
+            if (result == null || result.IsBsonNull)
+            {
+                throw new UserNotFoundException();
+            }
+            
+            return result.ToUser();
         }
     }
 }

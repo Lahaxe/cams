@@ -7,5 +7,7 @@ namespace cams.MongoDBConnector.Sessions
     public interface IMongoDBSession : ISession
     {
         IEnumerable<BsonDocument> Read(string collectionName);
+
+        BsonDocument Read(string collectionName, string id);
     }
 }

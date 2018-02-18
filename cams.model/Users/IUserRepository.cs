@@ -16,7 +16,8 @@ namespace cams.model.Users
         /// <summary>
         /// Get a <see cref="User"/> by Id.
         /// </summary>
+        /// <param name="id">The user identifier.</param>
         /// <returns>The requested <see cref="User"/>.</returns>
-        User GetUser();
+        User GetUser(string id);
     }
 }
