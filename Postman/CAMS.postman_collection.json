@@ -20,11 +20,22 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7e644339-c91f-4542-8721-1ec56352757f",
+										"id": "64d49b54-b797-4f87-83ca-908b141cc574",
 										"type": "text/javascript",
 										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
 											"",
-											"// Test PagedCollection structure",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											"",
+											"// Test User structure",
 											"pm.test(\"Structure of User\", function () {",
 											"    var data = pm.response.json();",
 											"    ",
@@ -50,7 +61,7 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "{{server}}:{{port}}/{{baseURL}}/users/idtest",
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users/5a8b43aded48162fe4d8df49",
 									"host": [
 										"{{server}}"
 									],
@@ -58,7 +69,7 @@
 									"path": [
 										"{{baseURL}}",
 										"users",
-										"idtest"
+										"5a8b43aded48162fe4d8df49"
 									]
 								},
 								"description": ""
@@ -74,9 +85,20 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "302bdae2-e0b0-4f1b-8225-c07b478fabcf",
+								"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
 								"type": "text/javascript",
 								"exec": [
+									"// Test Response status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test if response body is a json",
+									"pm.test(\"Response is a JSON\", function () { ",
+									"    pm.response.to.not.be.error; ",
+									"    pm.response.to.have.jsonBody(\"\"); ",
+									"    pm.response.to.not.have.jsonBody(\"error\"); ",
+									"});",
 									"",
 									"// Test PagedCollection structure",
 									"pm.test(\"Structure of PagedCollection\", function () {",
@@ -105,6 +127,74 @@
 							}
 						],
 						"body": {},
+						"url": {
+							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{baseURL}}",
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c59616c3-af17-4de6-a387-d46a7aaf3394",
+								"type": "text/javascript",
+								"exec": [
+									"// Test Response status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test if response body is a json",
+									"pm.test(\"Response is a JSON\", function () { ",
+									"    pm.response.to.not.be.error; ",
+									"    pm.response.to.have.jsonBody(\"\"); ",
+									"    pm.response.to.not.have.jsonBody(\"error\"); ",
+									"});",
+									"",
+									"// Test User structure",
+									"pm.test(\"Structure of User\", function () {",
+									"    var data = pm.response.json();",
+									"    ",
+									"    if (data.id !== undefined && data.id !== null) {",
+									"        throw { message : \"'id' is missing in User structure\" };",
+									"    }",
+									"    ",
+									"    if (data.name !== undefined && data.name !== null) {",
+									"        throw { message : \"'name' is missing in User structure\" };",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"TestPostUser\",\n\t\"id\": \"\"\n}"
+						},
 						"url": {
 							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
 							"host": [
@@ -150,6 +240,29 @@
 			"item": [
 				{
 					"name": "items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bfcad1cb-8d0d-4ed6-9487-8b0c634690d4",
+								"type": "text/javascript",
+								"exec": [
+									"// Test Response status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test if response body is a json",
+									"pm.test(\"Response is a JSON\", function () { ",
+									"    pm.response.to.not.be.error; ",
+									"    pm.response.to.have.jsonBody(\"\"); ",
+									"    pm.response.to.not.have.jsonBody(\"error\"); ",
+									"});",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -182,6 +295,29 @@
 			"item": [
 				{
 					"name": "collections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8d92338-e170-4a9b-86e4-02549d26f5d8",
+								"type": "text/javascript",
+								"exec": [
+									"// Test Response status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test if response body is a json",
+									"pm.test(\"Response is a JSON\", function () { ",
+									"    pm.response.to.not.be.error; ",
+									"    pm.response.to.have.jsonBody(\"\"); ",
+									"    pm.response.to.not.have.jsonBody(\"error\"); ",
+									"});",
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -227,25 +363,45 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2b5f5b11-cf95-4c20-9f5e-1e6ab1bb33e4",
+						"id": "db45e947-201e-4359-982e-60885d04e1f2",
 						"type": "text/javascript",
 						"exec": [
-							"if (responseCode.code === 200)",
-							"{",
+							"// Test Response status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test if response body is a json",
+							"pm.test(\"Response is a JSON\", function () { ",
+							"    pm.response.to.not.be.error; ",
+							"    pm.response.to.have.jsonBody(\"\"); ",
+							"    pm.response.to.not.have.jsonBody(\"error\"); ",
+							"});",
+							"",
+							"pm.test(\"Token is valid\", function () { ",
 							"    var data = JSON.parse(responseBody);",
+							"    if (data.access_token === undefined && data.access_token === null) {",
+							"        throw { message : \"Token is not valid\" };",
+							"    }",
 							"    postman.setEnvironmentVariable(\"token\", data.access_token);",
 							"    postman.setEnvironmentVariable(\"token_type\", data.token_type);",
-							"    postman.setEnvironmentVariable(\"username\", data.username);",
-							"    postman.setEnvironmentVariable(\"lang\", data.lang);",
-							"    ",
-							"    tests[\"Token is valid\"] = (data.access_token !== undefined && data.access_token !== null)",
-							"    tests[\"Lang is valid\"] = (data.lang !== undefined && data.lang !== null)",
-							"    ",
-							"    if (data.extendedProperties !== undefined && data.extendedProperties !== null)",
-							"    {",
-							"        var extendedProperties = JSON.parse(data.extendedProperties);",
+							"});",
+							"",
+							"pm.test(\"Lang is valid\", function () { ",
+							"    var data = pm.response.json();",
+							"    if (data.lang === undefined && data.lang === null) {",
+							"        throw { message : \"Lang is not valid\" };",
 							"    }",
-							"}"
+							"    postman.setEnvironmentVariable(\"lang\", data.lang);",
+							"});",
+							"",
+							"pm.test(\"Username is valid\", function () { ",
+							"    var data = JSON.parse(responseBody);",
+							"    if (data.username === undefined && data.username === null) {",
+							"        throw { message : \"Username is not valid\" };",
+							"    }",
+							"    postman.setEnvironmentVariable(\"username\", data.username);",
+							"});"
 						]
 					}
 				}
@@ -313,17 +469,6 @@
 				"id": "5604d9f1-d653-492c-aa5d-7af49b1f714a",
 				"type": "text/javascript",
 				"exec": [
-					"// Test Response status code",
-					"pm.test(\"Status code is 200\", function () {",
-					"    pm.response.to.have.status(200);",
-					"});",
-					"",
-					"// Test if response body is a json",
-					"pm.test(\"Response is a JSON\", function () { ",
-					"    pm.response.to.not.be.error; ",
-					"    pm.response.to.have.jsonBody(\"\"); ",
-					"    pm.response.to.not.have.jsonBody(\"error\"); ",
-					"});",
 					""
 				]
 			}
