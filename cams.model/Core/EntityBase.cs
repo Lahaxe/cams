@@ -3,7 +3,7 @@
     /// <summary>
     /// Base class for all CAMS entities.
     /// </summary>
-    public abstract class EntityBase : IIdentifiable
+    public class EntityBase : IIdentifiable
     {
         /// <summary>
         /// Gets or sets the identifer.

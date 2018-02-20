@@ -8,6 +8,8 @@ namespace cams.MongoDBConnector.Sessions
     {
         IEnumerable<BsonDocument> Read(string collectionName);
 
-        BsonDocument Read(string collectionName, string id);
+        BsonDocument Read(string collectionName, EntityBase entity);
+
+        void Create(string collectionName, BsonDocument doc);
     }
 }

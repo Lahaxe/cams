@@ -20,7 +20,6 @@ namespace cams.MongoDBConnector.Users
         public UserRepository(IMongoDBSessionFactory factory)
             : base(factory)
         {
-
         }
 
         /// <summary>
@@ -64,14 +63,36 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            var result = Session.Read("users", id);
+            var result = Session.Read("users", new EntityBase { Id = id });
 
             if (result == null || result.IsBsonNull)
             {
                 throw new UserNotFoundException();
             }
-            
+
             return result.ToUser();
+        }
+
+        /// <summary>
+        /// Creates an <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user to create.</param>
+        /// <returns>The created user.</returns>
+        public User CreateUser(User user)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+
+            // Creates the user
+            BsonDocument doc = null;
+            user.ToBsonDocument(ref doc);
+            doc.Remove("_id");
+            Session.Create("users", doc);
+
+            // Read the created user
+            return GetUser(doc.GetElement("_id").Value.AsObjectId.ToString());
         }
     }
 }

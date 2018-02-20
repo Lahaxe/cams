@@ -24,8 +24,39 @@ namespace cams.MongoDBConnector.Core
 
             return new T
             {
-                Id = bson.GetElement("id").Value.AsString
+                Id = bson.GetElement("_id").Value.AsObjectId.ToString()
             };
+        }
+
+        /// <summary>
+        /// Converts an <see cref="EntityBase"/> to BSON document.
+        /// </summary>
+        /// <typeparam name="T">The type of entityBase object.</typeparam>
+        /// <param name="entity">The <see cref="EntityBase"/> to convert.</param>
+        /// <param name="bson">The converted document.</param>
+        public static void ToBsonDocumentBase<T>(this T entity, ref BsonDocument bson)
+            where T : EntityBase
+        {
+            if (entity == null)
+            {
+                bson = null;
+                return;
+            }
+
+            if (bson == null)
+            {
+                bson = new BsonDocument();
+            }
+
+            var objId = new ObjectId();
+            if (entity.Id != null && ObjectId.TryParse(entity.Id, out objId))
+            {
+                bson.Add("_id", objId);
+            }
+            else
+            {
+                bson.Add("_id", BsonNull.Value);
+            }
         }
     }
 }

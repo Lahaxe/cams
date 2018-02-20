@@ -29,5 +29,17 @@ namespace cams.MongoDBConnector.Users
 
             return user;
         }
+
+        /// <summary>
+        /// Converts an <see cref="User"/> to BSON document.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/> to convert.</param>
+        /// <param name="bson">The converted document.</param>
+        public static void ToBsonDocument(this User user, ref BsonDocument bson)
+        {
+            user.ToBsonDocumentBase(ref bson);
+
+            bson.Add("name", user.Name);
+        }
     }
 }
