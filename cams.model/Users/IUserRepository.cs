@@ -19,5 +19,12 @@ namespace cams.model.Users
         /// <param name="id">The user identifier.</param>
         /// <returns>The requested <see cref="User"/>.</returns>
         User GetUser(string id);
+
+        /// <summary>
+        /// Creates an <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user to create.</param>
+        /// <returns>The created user.</returns>
+        User CreateUser(User user);
     }
 }

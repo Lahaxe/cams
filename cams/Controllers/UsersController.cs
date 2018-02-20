@@ -3,6 +3,7 @@ using cams.model.Users;
 using System;
 using System.Net;
 using System.Security;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -87,13 +88,48 @@ namespace cams.Controllers
             }
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="user">The <see cref="User"/> to create</param>
+        /// <returns>The created <see cref="User"/>.</returns>
+        /// <response code="200">Return <see cref="User"/> created.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Authentication required.</response>
+        /// <response code="403">Action not Allowed.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [Route("")]
+        [HttpPost]
+        [ResponseType(typeof(User))]
+#pragma warning disable CS1998 // Cette méthode async n'a pas d'opérateur 'await' et elle s'exécutera de façon synchrone
+        public async Task<IHttpActionResult> Post([FromBody]User user)
+#pragma warning restore CS1998 // Cette méthode async n'a pas d'opérateur 'await' et elle s'exécutera de façon synchrone
         {
+            try
+            {
+                return Ok(Repository.CreateUser(user));
+            }
+            catch (ArgumentException aex)
+            {
+                return BadRequest(aex.Message);
+            }
+            catch (SecurityException)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // PUT api/<controller>/5
         public void Put(string id, [FromBody]string value)
+        {
+        }
+
+        // PATCH api/<controller>/5
+        public void Patch(string id, [FromBody]string value)
         {
         }
 

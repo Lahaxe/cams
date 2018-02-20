@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using cams.model.Core;
+using cams.MongoDBConnector.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
 
 namespace cams.MongoDBConnector.Sessions
 {
@@ -23,7 +25,7 @@ namespace cams.MongoDBConnector.Sessions
             {
                 Credential = credentials,
                 Server = new MongoServerAddress(
-                    ConfigurationManager.AppSettings["DBServerAddress"], 
+                    ConfigurationManager.AppSettings["DBServerAddress"],
                     int.Parse(ConfigurationManager.AppSettings["DBServerPort"]))
             };
 
@@ -45,14 +47,20 @@ namespace cams.MongoDBConnector.Sessions
             return result.Result;
         }
 
-        public BsonDocument Read(string collectionName, string id)
+        public BsonDocument Read(string collectionName, EntityBase entity)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
-            var bsondoc = new BsonDocument();
-            bsondoc.Add("id", BsonValue.Create(id));
-            var result = collection.Find(bsondoc).FirstOrDefaultAsync();
+            BsonDocument test = null;
+            entity.ToBsonDocumentBase(ref test);
+            var result = collection.Find(test).FirstOrDefaultAsync();
             result.Wait();
             return result.Result;
+        }
+
+        public void Create(string collectionName, BsonDocument doc)
+        {
+            var collection = _database.GetCollection<BsonDocument>(collectionName);
+            collection.InsertOneAsync(doc).Wait();
         }
     }
 }
