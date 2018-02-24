@@ -11,5 +11,9 @@ namespace cams.MongoDBConnector.Sessions
         BsonDocument Read(string collectionName, EntityBase entity);
 
         void Create(string collectionName, BsonDocument doc);
+
+        void Delete(string collectionName, EntityBase entity);
+
+        void Delete(string collectionName, IList<EntityBase> entities);
     }
 }

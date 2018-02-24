@@ -75,6 +75,48 @@
 								"description": ""
 							},
 							"response": []
+						},
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "01ac765c-b540-494d-8cf2-d0038cbff9f7",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users/5a8c8358ed48162098959559",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users",
+										"5a8c8358ed48162098959559"
+									]
+								},
+								"description": ""
+							},
+							"response": []
 						}
 					],
 					"_postman_isSubFolder": true
@@ -194,6 +236,54 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"TestPostUser\",\n\t\"id\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{baseURL}}",
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c15f71dd-8151-40e7-9f89-d56cb413c8b3",
+								"type": "text/javascript",
+								"exec": [
+									"// Test Response status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t\"5a8c833ded48162098959558\",\n\t\"5a8c8462ed48162e608ae2dd\"\n]"
 						},
 						"url": {
 							"raw": "{{server}}:{{port}}/{{baseURL}}/users",

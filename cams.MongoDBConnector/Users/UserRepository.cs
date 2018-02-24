@@ -94,5 +94,39 @@ namespace cams.MongoDBConnector.Users
             // Read the created user
             return GetUser(doc.GetElement("_id").Value.AsObjectId.ToString());
         }
+
+        /// <summary>
+        /// Deletes an <see cref="User"/>.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        public void DeleteUser(string id)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+
+            Session.Delete("users", new EntityBase { Id = id });
+        }
+
+        /// <summary>
+        /// Deletes <see cref="User"/>.
+        /// </summary>
+        /// <param name="ids">List of user identifiers.</param>
+        public void DeleteUsers(IList<string> ids)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+
+            IList<EntityBase> entities = new List<EntityBase>();
+            foreach (var id in ids)
+            {
+                entities.Add(new EntityBase { Id = id });
+            }
+
+            Session.Delete("users", entities);
+        }
     }
 }

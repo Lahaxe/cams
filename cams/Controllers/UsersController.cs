@@ -1,6 +1,7 @@
 ﻿using cams.model.Core;
 using cams.model.Users;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
@@ -133,9 +134,68 @@ namespace cams.Controllers
         {
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(string id)
+        /// <summary>
+        /// Deletes an user.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        /// <response code="200">The user has been deleted.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Authentication required.</response>
+        /// <response code="403">Action not Allowed.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpDelete]
+        [Route("{id}")]
+        public IHttpActionResult Delete(string id)
         {
+            try
+            {
+                Repository.DeleteUser(id);
+                return Ok();
+            }
+            catch (ArgumentException aex)
+            {
+                return BadRequest(aex.Message);
+            }
+            catch (SecurityException)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes users.
+        /// </summary>
+        /// <param name="ids">List of user identifiers to delete.</param>
+        /// <response code="200">The users has been deleted.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Authentication required.</response>
+        /// <response code="403">Action not Allowed.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpDelete]
+        [Route("")]
+        public IHttpActionResult Delete(IList<string> ids)
+        {
+            try
+            {
+                Repository.DeleteUsers(ids);
+                return Ok();
+            }
+            catch (ArgumentException aex)
+            {
+                return BadRequest(aex.Message);
+            }
+            catch (SecurityException)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

@@ -50,9 +50,9 @@ namespace cams.MongoDBConnector.Sessions
         public BsonDocument Read(string collectionName, EntityBase entity)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
-            BsonDocument test = null;
-            entity.ToBsonDocumentBase(ref test);
-            var result = collection.Find(test).FirstOrDefaultAsync();
+            BsonDocument bson = null;
+            entity.ToBsonDocumentBase(ref bson);
+            var result = collection.Find(bson).FirstOrDefaultAsync();
             result.Wait();
             return result.Result;
         }
@@ -61,6 +61,23 @@ namespace cams.MongoDBConnector.Sessions
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
             collection.InsertOneAsync(doc).Wait();
+        }
+
+        public void Delete(string collectionName, EntityBase entity)
+        {
+            var collection = _database.GetCollection<BsonDocument>(collectionName);
+            BsonDocument bson = null;
+            entity.ToBsonDocumentBase(ref bson);
+            var result = collection.DeleteManyAsync(bson);
+            result.Wait();
+        }
+        
+        public void Delete(string collectionName, IList<EntityBase> entities)
+        {
+            foreach (var entity in entities)
+            {
+                Delete(collectionName, entity);
+            }
         }
     }
 }

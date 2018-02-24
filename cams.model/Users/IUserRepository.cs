@@ -1,4 +1,5 @@
 ﻿using cams.model.Core;
+using System.Collections.Generic;
 
 namespace cams.model.Users
 {
@@ -26,5 +27,17 @@ namespace cams.model.Users
         /// <param name="user">The user to create.</param>
         /// <returns>The created user.</returns>
         User CreateUser(User user);
+
+        /// <summary>
+        /// Deletes an <see cref="User"/>.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        void DeleteUser(string id);
+
+        /// <summary>
+        /// Deletes <see cref="User"/>.
+        /// </summary>
+        /// <param name="ids">List of user identifiers.</param>
+        void DeleteUsers(IList<string> ids);
     }
 }
