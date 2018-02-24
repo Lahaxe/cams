@@ -60,6 +60,11 @@
     <Compile Include="Items\Stamps\IStampRepository.cs" />
     <Compile Include="Items\Stamps\Stamp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryParameters\Filters\Filter.cs" />
+    <Compile Include="QueryParameters\Filters\FilteringParameters.cs" />
+    <Compile Include="QueryParameters\Filters\FilteringParametersBase.cs" />
+    <Compile Include="QueryParameters\Filters\FilteringParametersConverter.cs" />
+    <Compile Include="QueryParameters\Filters\FilterOperator.cs" />
     <Compile Include="QueryParameters\Pages\PagingParameters.cs" />
     <Compile Include="QueryParameters\Pages\PagingParametersBase.cs" />
     <Compile Include="QueryParameters\Pages\PagingParametersConverter.cs" />
