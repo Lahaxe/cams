@@ -1,12 +1,13 @@
 ﻿using cams.model.Core;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
 
 namespace cams.MongoDBConnector.Sessions
 {
     public interface IMongoDBSession : ISession
     {
-        IEnumerable<BsonDocument> Read(string collectionName);
+        IEnumerable<BsonDocument> Read(string collectionName, FilterDefinition<BsonDocument> filter);
 
         BsonDocument Read(string collectionName, EntityBase entity);
 

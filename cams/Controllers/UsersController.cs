@@ -129,9 +129,42 @@ namespace cams.Controllers
         {
         }
 
-        // PATCH api/<controller>/5
-        public void Patch(string id, [FromBody]string value)
+        /// <summary>
+        /// Partially updates an <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user to update.</param>
+        /// <returns>Status.</returns>
+        /// <response code="200">Return request ok.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Authentication required.</response>
+        /// <response code="403">Action not Allowed.</response>
+        /// <response code="404">The resource code given does not correspond to any existing user.</response>
+        /// <response code="500">Internal Server Error.</response>
+        [HttpPatch]
+        [Route("")]
+        public IHttpActionResult Patch([FromBody]User user)
         {
+            try
+            {
+                Repository.PatchUser(user);
+                return Ok();
+            }
+            catch (ArgumentException aex)
+            {
+                return BadRequest(aex.Message);
+            }
+            catch (SecurityException)
+            {
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         /// <summary>

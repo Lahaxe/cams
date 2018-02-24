@@ -29,6 +29,12 @@ namespace cams.model.Users
         User CreateUser(User user);
 
         /// <summary>
+        /// Updates an <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user to update.</param>
+        void PatchUser(User user);
+
+        /// <summary>
         /// Deletes an <see cref="User"/>.
         /// </summary>
         /// <param name="id">The user identifier.</param>

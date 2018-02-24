@@ -39,7 +39,7 @@ namespace cams.MongoDBConnector.Sessions
             _database = _client.GetDatabase(ConfigurationManager.AppSettings["DBName"]);
         }
 
-        public IEnumerable<BsonDocument> Read(string collectionName)
+        public IEnumerable<BsonDocument> Read(string collectionName, FilterDefinition<BsonDocument> filter)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
             var result = collection.Find(new BsonDocument()).ToListAsync();

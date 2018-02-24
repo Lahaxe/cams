@@ -33,13 +33,13 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            var result = Session.Read("users");
+            var result = Session.Read("users", new EntityBase());
 
             var users = new List<User>();
-            foreach (BsonDocument doc in result)
+            /*foreach (BsonDocument doc in result)
             {
                 users.Add(doc.ToUser());
-            }
+            }*/
 
             return new PagedCollection<User>
             {
@@ -93,6 +93,20 @@ namespace cams.MongoDBConnector.Users
 
             // Read the created user
             return GetUser(doc.GetElement("_id").Value.AsObjectId.ToString());
+        }
+
+        /// <summary>
+        /// Updates an <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user to update.</param>
+        public void PatchUser(User user)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+
+
         }
 
         /// <summary>
