@@ -39,13 +39,17 @@ namespace cams.MongoDBConnector.Sessions
             _database = _client.GetDatabase(ConfigurationManager.AppSettings["DBName"]);
         }
 
-        public MongoDBPagedCollection Read(string collectionName, MongoDBPagingParameters paging)
+        public MongoDBPagedCollection Read(string collectionName, MongoDBPagingParameters paging, SortDefinition<BsonDocument> sorting)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
 
             var query = collection.Find(new BsonDocument());
 
             var totalTask = query.Count();
+            if (sorting != null)
+            {
+                query = query.Sort(sorting);
+            }
             var itemsTask = query.Skip(paging.Skip).Limit(paging.Limit).ToList();
 
             return new MongoDBPagedCollection

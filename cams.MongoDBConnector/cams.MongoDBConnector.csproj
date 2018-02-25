@@ -76,6 +76,7 @@
     <Compile Include="Sessions\MongoDBPagingParametersExtensions.cs" />
     <Compile Include="Sessions\MongoDBSession.cs" />
     <Compile Include="Sessions\MongoDBSessionFactory.cs" />
+    <Compile Include="Sessions\MongoDBSortingParametersExtensions.cs" />
     <Compile Include="Users\UserExtensions.cs" />
     <Compile Include="Users\UserRepository.cs" />
   </ItemGroup>

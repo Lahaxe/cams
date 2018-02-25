@@ -287,6 +287,76 @@
 								],
 								"body": {},
 								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - paging",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    var containsPageIndex = (data.pageIndex !== undefined && data.pageIndex !== null);",
+											"    var containsPageSize = (data.pageSize !== undefined && data.pageSize !== null);",
+											"    var containsTotalNumberOfItems = (data.totalNumberOfItems !== undefined && data.totalNumberOfItems !== null);",
+											"    var containsTotalNumberOfPages = (data.totalNumberOfPages !== undefined && data.totalNumberOfPages !== null);",
+											"    var containsItem = (data.items !== undefined && data.items !== null);",
+											"    ",
+											"    if (!containsItem || !containsPageIndex || !containsPageSize || !containsTotalNumberOfItems || !containsTotalNumberOfPages) {",
+											"        throw { message : \"Response structure is not a PagedCollection\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
 									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&paging={{parameters-paging}}",
 									"host": [
 										"{{server}}"
@@ -305,6 +375,81 @@
 										{
 											"key": "paging",
 											"value": "{{parameters-paging}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - sorting",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    var containsPageIndex = (data.pageIndex !== undefined && data.pageIndex !== null);",
+											"    var containsPageSize = (data.pageSize !== undefined && data.pageSize !== null);",
+											"    var containsTotalNumberOfItems = (data.totalNumberOfItems !== undefined && data.totalNumberOfItems !== null);",
+											"    var containsTotalNumberOfPages = (data.totalNumberOfPages !== undefined && data.totalNumberOfPages !== null);",
+											"    var containsItem = (data.items !== undefined && data.items !== null);",
+											"    ",
+											"    if (!containsItem || !containsPageIndex || !containsPageSize || !containsTotalNumberOfItems || !containsTotalNumberOfPages) {",
+											"        throw { message : \"Response structure is not a PagedCollection\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&sorting={{parameters-sorting}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "sorting",
+											"value": "{{parameters-sorting}}",
 											"equals": true
 										}
 									]
