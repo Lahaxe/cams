@@ -1,4 +1,8 @@
 ﻿using cams.model.Core;
+using cams.model.QueryParameters.Fields;
+using cams.model.QueryParameters.Filters;
+using cams.model.QueryParameters.Pages;
+using cams.model.QueryParameters.Sorts;
 using cams.model.Users;
 using System;
 using System.Collections.Generic;
@@ -10,12 +14,22 @@ using System.Web.Http.Description;
 
 namespace cams.Controllers
 {
+    /// <summary>
+    /// The user controller.
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
+        /// <summary>
+        /// The user repository.
+        /// </summary>
         private IUserRepository Repository { get; }
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="UsersController"/>.
+        /// </summary>
+        /// <param name="repository">The user repository.</param>
         public UsersController(IUserRepository repository)
         {
             Repository = repository;
@@ -24,6 +38,11 @@ namespace cams.Controllers
         /// <summary>
         /// Get a list of <see cref="User"/>.
         /// </summary>
+        /// <param name="lang">The language.</param>
+        /// <param name="paging">The paging parameters.</param>
+        /// <param name="sorting">The sorting parameters.</param>
+        /// <param name="filtering">The filtering parameters.</param>
+        /// <param name="fielding">The fielding parameters.</param>
         /// <returns>List of <see cref="User"/></returns>
         /// <response code="200">Return the pagined list of <see cref="User"/>.</response>
         /// <response code="400">Bad request.</response>
@@ -32,10 +51,39 @@ namespace cams.Controllers
         /// <response code="500">Internal Server Error.</response>
         [Route("")]
         [ResponseType(typeof(PagedCollection<User>))]
-        public IHttpActionResult GetUsersList()
+        public IHttpActionResult GetUsersList(string lang = null,
+                                              PagingParameters paging = null,
+                                              SortingParameters sorting = null,
+                                              FilteringParameters filtering = null,
+                                              FieldingParameters fielding = null)
         {
             try
             {
+                if (paging == null)
+                {
+                    paging = new PagingParameters();
+                }
+
+                if (paging != null && !paging.IsValid)
+                {
+                    throw new ArgumentException(nameof(paging));
+                }
+
+                if (sorting != null && !sorting.IsValid)
+                {
+                    throw new ArgumentException(nameof(sorting));
+                }
+
+                if (filtering != null && !filtering.IsValid)
+                {
+                    throw new ArgumentException(nameof(filtering));
+                }
+
+                if (fielding != null && !fielding.IsValid)
+                {
+                    throw new ArgumentException(nameof(fielding));
+                }
+
                 return Ok(Repository.GetUsers());
             }
             catch (ArgumentException aex)
