@@ -71,6 +71,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessions\IMongoDBSession.cs" />
     <Compile Include="Sessions\IMongoDBSessionFactory.cs" />
+    <Compile Include="Sessions\MongoDBPagedCollection.cs" />
+    <Compile Include="Sessions\MongoDBPagingParameters.cs" />
+    <Compile Include="Sessions\MongoDBPagingParametersExtensions.cs" />
     <Compile Include="Sessions\MongoDBSession.cs" />
     <Compile Include="Sessions\MongoDBSessionFactory.cs" />
     <Compile Include="Users\UserExtensions.cs" />

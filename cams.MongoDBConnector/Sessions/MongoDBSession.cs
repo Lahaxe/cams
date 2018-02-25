@@ -39,12 +39,23 @@ namespace cams.MongoDBConnector.Sessions
             _database = _client.GetDatabase(ConfigurationManager.AppSettings["DBName"]);
         }
 
-        public IEnumerable<BsonDocument> Read(string collectionName, FilterDefinition<BsonDocument> filter)
+        public MongoDBPagedCollection Read(string collectionName, MongoDBPagingParameters paging)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
-            var result = collection.Find(new BsonDocument()).ToListAsync();
-            result.Wait();
-            return result.Result;
+
+            var query = collection.Find(new BsonDocument());
+
+            var totalTask = query.Count();
+            var itemsTask = query.Skip(paging.Skip).Limit(paging.Limit).ToList();
+
+            return new MongoDBPagedCollection
+            {
+                Items = itemsTask,
+                TotalNumberOfItems = totalTask,
+                PageIndex = 0,
+                PageSize = 0,
+                TotalNumberOfPages = 0
+            };
         }
 
         public BsonDocument Read(string collectionName, EntityBase entity)
@@ -71,7 +82,7 @@ namespace cams.MongoDBConnector.Sessions
             var result = collection.DeleteManyAsync(bson);
             result.Wait();
         }
-        
+
         public void Delete(string collectionName, IList<EntityBase> entities)
         {
             foreach (var entity in entities)

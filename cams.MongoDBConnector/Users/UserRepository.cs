@@ -1,4 +1,8 @@
 ﻿using cams.model.Core;
+using cams.model.QueryParameters.Fields;
+using cams.model.QueryParameters.Filters;
+using cams.model.QueryParameters.Pages;
+using cams.model.QueryParameters.Sorts;
 using cams.model.Users;
 using cams.MongoDBConnector.Core;
 using cams.MongoDBConnector.Sessions;
@@ -25,29 +29,32 @@ namespace cams.MongoDBConnector.Users
         /// <summary>
         /// Get a list of <see cref="User"/>.
         /// </summary>
+        /// <param name="lang">The language.</param>
+        /// <param name="paging">The paging parameters.</param>
+        /// <param name="sorting">The sorting parameters.</param>
+        /// <param name="filtering">The filtering parameters.</param>
+        /// <param name="fielding">The fielding parameters.</param>
         /// <returns>The pagined list of <see cref="User"/>.</returns>
-        public PagedCollection<User> GetUsers()
+        public PagedCollection<User> GetUsers(string lang,
+                                              PagingParameters paging,
+                                              SortingParameters sorting,
+                                              FilteringParameters filtering,
+                                              FieldingParameters fielding)
         {
             if (Session == null)
             {
                 throw new Exception("Session is null");
             }
 
-            var result = Session.Read("users", new EntityBase());
-
-            var users = new List<User>();
-            /*foreach (BsonDocument doc in result)
-            {
-                users.Add(doc.ToUser());
-            }*/
+            var result = Session.Read("users", paging.ToMDBPagingParameters());
 
             return new PagedCollection<User>
             {
-                Items = users,
-                TotalNumberOfItems = users.Count,
-                PageIndex = 1,
-                PageSize = users.Count,
-                TotalNumberOfPages = 1
+                Items = result.Items.ToUserList(),
+                TotalNumberOfItems = result.TotalNumberOfItems,
+                PageIndex = paging.Index,
+                PageSize = paging.Size,
+                TotalNumberOfPages = (long)Math.Ceiling(result.TotalNumberOfItems / (double)paging.Size)
             };
         }
 
@@ -105,8 +112,6 @@ namespace cams.MongoDBConnector.Users
             {
                 throw new Exception("Session is null");
             }
-
-
         }
 
         /// <summary>

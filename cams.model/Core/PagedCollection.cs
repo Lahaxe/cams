@@ -26,11 +26,11 @@ namespace cams.model.Core
         /// <summary>
         /// Gets or sets the number of items.
         /// </summary>
-        public int TotalNumberOfItems { get; set; }
+        public long TotalNumberOfItems { get; set; }
 
         /// <summary>
         /// Gets or sets the number of pages.
         /// </summary>
-        public int TotalNumberOfPages { get; set; }
+        public long TotalNumberOfPages { get; set; }
     }
 }

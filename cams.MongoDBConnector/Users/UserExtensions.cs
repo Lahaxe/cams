@@ -1,6 +1,8 @@
 ﻿using cams.model.Users;
 using cams.MongoDBConnector.Core;
 using MongoDB.Bson;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace cams.MongoDBConnector.Users
 {
@@ -40,6 +42,14 @@ namespace cams.MongoDBConnector.Users
             user.ToBsonDocumentBase(ref bson);
 
             bson.Add("name", user.Name);
+        }
+
+        public static IEnumerable<User> ToUserList(this IEnumerable<BsonDocument> bsons)
+        {
+            var result = new List<User>();
+            bsons.ToList().ForEach(bson => result.Add(bson.ToUser()));
+
+            return result;
         }
     }
 }

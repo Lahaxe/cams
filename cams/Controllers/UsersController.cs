@@ -84,7 +84,7 @@ namespace cams.Controllers
                     throw new ArgumentException(nameof(fielding));
                 }
 
-                return Ok(Repository.GetUsers());
+                return Ok(Repository.GetUsers(lang, paging, sorting, filtering, fielding));
             }
             catch (ArgumentException aex)
             {
