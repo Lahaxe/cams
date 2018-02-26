@@ -3,9 +3,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace cams.Tests.Model.Users
 {
+    /// <summary>
+    /// Defines unit tests for <see cref="User"/>.
+    /// </summary>
     [TestClass]
     public class UserTest
     {
+        /// <summary>
+        /// Test Constructor.
+        /// </summary>
         [TestMethod]
         public void TestUserContructor()
         {
@@ -16,6 +22,9 @@ namespace cams.Tests.Model.Users
             Assert.IsNull(user.Name);
         }
 
+        /// <summary>
+        /// Test Getters and setters.
+        /// </summary>
         [TestMethod]
         public void TestUserGetAndSet()
         {

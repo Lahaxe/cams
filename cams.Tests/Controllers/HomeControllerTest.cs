@@ -1,13 +1,18 @@
-﻿using System.Web.Mvc;
+﻿using cams.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using cams;
-using cams.Controllers;
+using System.Web.Mvc;
 
 namespace cams.Tests.Controllers
 {
+    /// <summary>
+    /// Defines unit tests for <see cref="HomeController"/>.
+    /// </summary>
     [TestClass]
     public class HomeControllerTest
     {
+        /// <summary>
+        /// Test the index function.
+        /// </summary>
         [TestMethod]
         public void Index()
         {
