@@ -2,8 +2,16 @@
 
 namespace cams.MongoDBConnector.QueryParameters
 {
+    /// <summary>
+    /// Defines converters for <see cref="PagingParameters"/>.
+    /// </summary>
     internal static class MongoDBPagingParametersExtensions
     {
+        /// <summary>
+        /// Converts paging parameters to MongoDB paging parameters.
+        /// </summary>
+        /// <param name="paging">The paging parameters to convert.</param>
+        /// <returns>The converted MongoDB paging parameters.</returns>
         public static MongoDBPagingParameters ToMDBPagingParameters(this PagingParameters paging)
         {
             if (paging == null)

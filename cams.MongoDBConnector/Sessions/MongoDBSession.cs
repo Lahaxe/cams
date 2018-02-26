@@ -9,12 +9,24 @@ using System.Configuration;
 
 namespace cams.MongoDBConnector.Sessions
 {
+    /// <summary>
+    /// Defines a MongoDB session.
+    /// </summary>
     public class MongoDBSession : IMongoDBSession
     {
+        /// <summary>
+        /// The MongoDB client.
+        /// </summary>
         private IMongoClient _client;
 
+        /// <summary>
+        /// The MongoDB database.
+        /// </summary>
         private IMongoDatabase _database;
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="MongoDBSession"/>.
+        /// </summary>
         public MongoDBSession()
         {
             var credentials = MongoCredential.CreateCredential(
@@ -33,8 +45,14 @@ namespace cams.MongoDBConnector.Sessions
             _client = new MongoClient(mongoClientSettings);
         }
 
+        /// <summary>
+        /// Disposes the MongoDB session.
+        /// </summary>
         public void Dispose() => GC.SuppressFinalize(this);
 
+        /// <summary>
+        /// Connects to the MongoDB database.
+        /// </summary>
         public void Connect()
         {
             _database = _client.GetDatabase(ConfigurationManager.AppSettings["DBName"]);
@@ -74,6 +92,7 @@ namespace cams.MongoDBConnector.Sessions
             };
         }
 
+        // TODO
         public BsonDocument Read(string collectionName, EntityBase entity)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
@@ -84,12 +103,14 @@ namespace cams.MongoDBConnector.Sessions
             return result.Result;
         }
 
+        // TODO
         public void Create(string collectionName, BsonDocument doc)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
             collection.InsertOneAsync(doc).Wait();
         }
 
+        // TODO
         public void Delete(string collectionName, EntityBase entity)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
@@ -99,6 +120,7 @@ namespace cams.MongoDBConnector.Sessions
             result.Wait();
         }
 
+        // TODO
         public void Delete(string collectionName, IList<EntityBase> entities)
         {
             foreach (var entity in entities)

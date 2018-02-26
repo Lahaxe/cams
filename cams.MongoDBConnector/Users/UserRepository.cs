@@ -21,7 +21,7 @@ namespace cams.MongoDBConnector.Users
         /// <summary>
         /// Create a new instance of <see cref="UserRepository"/>.
         /// </summary>
-        /// <param name="factory">The mongodb session factory.</param>
+        /// <param name="factory">The MongoDB session factory.</param>
         public UserRepository(IMongoDBSessionFactory factory)
             : base(factory)
         {

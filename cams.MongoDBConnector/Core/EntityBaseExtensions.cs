@@ -1,6 +1,5 @@
 ﻿using cams.model.Core;
 using MongoDB.Bson;
-using System.Collections.Generic;
 
 namespace cams.MongoDBConnector.Core
 {

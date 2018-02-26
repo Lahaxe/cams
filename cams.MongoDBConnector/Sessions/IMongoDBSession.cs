@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace cams.MongoDBConnector.Sessions
 {
+    /// <summary>
+    /// Defines a MongoDB session.
+    /// </summary>
     public interface IMongoDBSession : ISession
     {
         /// <summary>
@@ -22,12 +25,16 @@ namespace cams.MongoDBConnector.Sessions
                                     SortDefinition<BsonDocument> sorting,
                                     FilterDefinition<BsonDocument> filtering = null);
 
+        // TODO
         BsonDocument Read(string collectionName, EntityBase entity);
 
+        // TODO
         void Create(string collectionName, BsonDocument doc);
 
+        // TODO
         void Delete(string collectionName, EntityBase entity);
 
+        // TODO
         void Delete(string collectionName, IList<EntityBase> entities);
     }
 }

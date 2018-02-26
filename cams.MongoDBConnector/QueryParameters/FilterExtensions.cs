@@ -5,8 +5,16 @@ using System.Collections.Generic;
 
 namespace cams.MongoDBConnector.QueryParameters
 {
+    /// <summary>
+    /// Defines converters for <see cref="Filter"/>.
+    /// </summary>
     internal static class FilterExtensions
     {
+        /// <summary>
+        /// Converts Filter to MongoDB filters.
+        /// </summary>
+        /// <param name="filter">The filter to convert.</param>
+        /// <returns>The MongoDB filters.</returns>
         public static FilterDefinition<BsonDocument> ToFilterDefinition(this Filter filter)
         {
             if (filter == null)
@@ -68,6 +76,11 @@ namespace cams.MongoDBConnector.QueryParameters
             return result;
         }
 
+        /// <summary>
+        /// Converts a list of <see cref="Filter"/> to list of MongoDB filters.
+        /// </summary>
+        /// <param name="filters">List of filters to convert.</param>
+        /// <returns>The MongoDB filters.</returns>
         public static IEnumerable<FilterDefinition<BsonDocument>> ToFilterDefinitionList(this ICollection<Filter> filters)
         {
             if (filters == null)

@@ -4,10 +4,19 @@ using System;
 
 namespace cams.MongoDBConnector.Core
 {
+    /// <summary>
+    /// Defines base class for repository.
+    /// </summary>
     public class RepositoryBase : IRepository
     {
+        /// <summary>
+        /// The MongoDB session factory.
+        /// </summary>
         private readonly IMongoDBSessionFactory _factory;
 
+        /// <summary>
+        /// The MongoDB session.
+        /// </summary>
         private MongoDBSession _session;
 
         /// <summary>
@@ -31,11 +40,18 @@ namespace cams.MongoDBConnector.Core
             }
         }
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="RepositoryBase"/>.
+        /// </summary>
+        /// <param name="factory">The MongoDB session factory.</param>
         protected RepositoryBase(IMongoDBSessionFactory factory)
         {
             _factory = factory;
         }
 
+        /// <summary>
+        /// Disposes the repository.
+        /// </summary>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
