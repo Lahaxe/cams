@@ -44,6 +44,11 @@ namespace cams.MongoDBConnector.Users
             bson.Add("name", user.Name);
         }
 
+        /// <summary>
+        /// Converts a list of <see cref="BsonDocument"/> to a list of <see cref="User"/>.
+        /// </summary>
+        /// <param name="bsons">List to convert.</param>
+        /// <returns>The converted list.</returns>
         public static IEnumerable<User> ToUserList(this IEnumerable<BsonDocument> bsons)
         {
             var result = new List<User>();

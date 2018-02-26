@@ -7,7 +7,6 @@ using cams.model.Users;
 using cams.MongoDBConnector.Core;
 using cams.MongoDBConnector.Sessions;
 using MongoDB.Bson;
-using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 
@@ -46,8 +45,11 @@ namespace cams.MongoDBConnector.Users
             {
                 throw new Exception("Session is null");
             }
-            
-            var result = Session.Read("users", paging.ToMDBPagingParameters(), sorting.ToSortDefinition());
+
+            var result = Session.Read("users",
+                                      paging.ToMDBPagingParameters(),
+                                      sorting.ToSortDefinition(),
+                                      filtering.ToFilterDefinition());
 
             return new PagedCollection<User>
             {

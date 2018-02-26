@@ -11,7 +11,7 @@ namespace cams.MongoDBConnector.Sessions
                 return null;
             }
 
-            return new MongoDBPagingParameters { Limit = paging.Size, Skip = (paging.Index-1) * paging.Size };
+            return new MongoDBPagingParameters { Limit = paging.Size, Skip = (paging.Index - 1) * paging.Size };
         }
     }
 }

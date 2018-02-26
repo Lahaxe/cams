@@ -35,12 +35,6 @@ namespace cams.model.QueryParameters.Filters
         NotEqual,
 
         /// <summary>
-        /// Operator In.
-        /// </summary>
-        [EnumMember(Value = "in")]
-        In,
-
-        /// <summary>
         /// Operator Greater than.
         /// </summary>
         [EnumMember(Value = "gt")]
