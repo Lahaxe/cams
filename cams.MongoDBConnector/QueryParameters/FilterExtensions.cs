@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 
-namespace cams.MongoDBConnector.Sessions
+namespace cams.MongoDBConnector.QueryParameters
 {
     internal static class FilterExtensions
     {

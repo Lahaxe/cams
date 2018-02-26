@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace cams.MongoDBConnector.Sessions
+namespace cams.MongoDBConnector.QueryParameters
 {
     internal static class MongoDBFilteringParametersExtensions
     {

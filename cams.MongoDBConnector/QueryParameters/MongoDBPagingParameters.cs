@@ -1,4 +1,4 @@
-﻿namespace cams.MongoDBConnector.Sessions
+﻿namespace cams.MongoDBConnector.QueryParameters
 {
     public class MongoDBPagingParameters
     {

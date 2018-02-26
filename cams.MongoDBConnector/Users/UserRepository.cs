@@ -5,6 +5,7 @@ using cams.model.QueryParameters.Pages;
 using cams.model.QueryParameters.Sorts;
 using cams.model.Users;
 using cams.MongoDBConnector.Core;
+using cams.MongoDBConnector.QueryParameters;
 using cams.MongoDBConnector.Sessions;
 using MongoDB.Bson;
 using System;

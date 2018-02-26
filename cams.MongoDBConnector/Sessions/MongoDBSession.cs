@@ -1,5 +1,6 @@
 ﻿using cams.model.Core;
 using cams.MongoDBConnector.Core;
+using cams.MongoDBConnector.QueryParameters;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;

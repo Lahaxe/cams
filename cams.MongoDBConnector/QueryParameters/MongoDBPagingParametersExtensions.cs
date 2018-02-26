@@ -1,6 +1,6 @@
 ﻿using cams.model.QueryParameters.Pages;
 
-namespace cams.MongoDBConnector.Sessions
+namespace cams.MongoDBConnector.QueryParameters
 {
     internal static class MongoDBPagingParametersExtensions
     {
