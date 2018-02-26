@@ -4,12 +4,22 @@ using System.Web.Http;
 
 namespace cams.Controllers
 {
+    /// <summary>
+    /// Defines the Stamp controller.
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/stamps")]
     public class StampsController : ApiController
     {
+        /// <summary>
+        /// The stamp repository.
+        /// </summary>
         private IStampRepository Repository { get; }
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="StampsController"/>.
+        /// </summary>
+        /// <param name="repository">The stamp repository.</param>
         public StampsController(IStampRepository repository)
         {
             Repository = repository;

@@ -15,7 +15,7 @@ using System.Web.Http.Description;
 namespace cams.Controllers
 {
     /// <summary>
-    /// The user controller.
+    /// Defines the user controller.
     /// </summary>
     [Authorize]
     [RoutePrefix("api/users")]

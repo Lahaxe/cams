@@ -34,7 +34,7 @@ namespace cams.MongoDBConnector.Users
         /// <param name="paging">The paging parameters.</param>
         /// <param name="sorting">The sorting parameters.</param>
         /// <param name="filtering">The filtering parameters.</param>
-        /// <param name="fielding">The fielding parameters.</param>
+        /// <param name="fielding">The fielding parameters. (not used)</param>
         /// <returns>The pagined list of <see cref="User"/>.</returns>
         public PagedCollection<User> GetUsers(string lang,
                                               PagingParameters paging,

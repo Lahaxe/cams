@@ -4,12 +4,22 @@ using System.Web.Http;
 
 namespace cams.Controllers
 {
+    /// <summary>
+    /// Defines the Item controller.
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/items")]
     public class ItemsController : ApiController
     {
+        /// <summary>
+        /// The Item repository.
+        /// </summary>
         private IItemRepository Repository { get; }
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="ItemsController"/>.
+        /// </summary>
+        /// <param name="repository">The item repository.</param>
         public ItemsController(IItemRepository repository)
         {
             Repository = repository;

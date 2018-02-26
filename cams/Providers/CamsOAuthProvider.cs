@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace cams.Providers
 {
+    /// <summary>
+    /// Defines the CAMS OAuth Provider.
+    /// </summary>
     public class CamsOAuthProvider : OAuthAuthorizationServerProvider
     {
         /// <summary>
@@ -54,8 +57,7 @@ namespace cams.Providers
                         oAuthIdentity.AddClaim(new Claim(ClaimTypes.Role, "user"));
                         //oAuthIdentity.AddClaim(new Claim(ClaimTypes.Sid, session.Api.Session.ToString()));
 
-                        var props = CreateProperties(context.UserName,
-                                                     "fr_FR");
+                        var props = CreateProperties(context.UserName, "fr_FR");
                         var ticket = new AuthenticationTicket(oAuthIdentity, props);
                         context.Validated(ticket);
                     /*

@@ -4,12 +4,22 @@ using System.Web.Http;
 
 namespace cams.Controllers
 {
+    /// <summary>
+    /// Defines the Collection controller.
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/collections")]
     public class CollectionsController : ApiController
     {
+        /// <summary>
+        /// The collection repository.
+        /// </summary>
         private ICollectionRepository Repository { get; }
 
+        /// <summary>
+        /// Initialize a new instance of <see cref="CollectionsController"/>.
+        /// </summary>
+        /// <param name="repository">The collection repository.</param>
         public CollectionsController(ICollectionRepository repository)
         {
             Repository = repository;
