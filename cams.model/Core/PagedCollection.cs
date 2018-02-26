@@ -3,7 +3,7 @@
 namespace cams.model.Core
 {
     /// <summary>
-    /// Collection with pagination information.
+    /// Defines the Collection with pagination information.
     /// </summary>
     /// <typeparam name="T">Object type.</typeparam>
     public class PagedCollection<T>

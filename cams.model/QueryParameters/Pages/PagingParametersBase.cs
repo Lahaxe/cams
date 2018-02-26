@@ -3,6 +3,9 @@ using System.ComponentModel;
 
 namespace cams.model.QueryParameters.Pages
 {
+    /// <summary>
+    /// Base class for paging parameters.
+    /// </summary>
     public class PagingParametersBase
     {
         /// <summary>

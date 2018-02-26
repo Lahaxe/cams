@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace cams.model.QueryParameters.Filters
 {
+    /// <summary>
+    /// Defines a filter.
+    /// </summary>
     public class Filter
     {
         /// <summary>

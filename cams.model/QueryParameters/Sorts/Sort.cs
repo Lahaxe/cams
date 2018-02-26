@@ -6,12 +6,12 @@
     public class Sort
     {
         /// <summary>
-        /// Sorting direction.
+        /// Gets or sets the Sorting direction.
         /// </summary>
         public SortingDirection Direction { get; set; }
 
         /// <summary>
-        /// Sorting attribute.
+        /// Gets or sets the Sorting attribute.
         /// </summary>
         public string Attribute { get; set; }
     }

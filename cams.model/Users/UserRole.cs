@@ -9,7 +9,7 @@
         /// An administrator role.
         /// </summary>
         Administrator,
-        
+
         /// <summary>
         /// A simple user role.
         /// </summary>

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace cams.model.QueryParameters.Fields
 {
     /// <summary>
-    /// Defines the direction of sort.
+    /// Defines the field visibility.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum FieldingVisibility

@@ -2,6 +2,9 @@
 
 namespace cams.model.QueryParameters.Pages
 {
+    /// <summary>
+    /// Defines the paging parameters.
+    /// </summary>
     [TypeConverter(typeof(PagingParametersConverter))]
     public class PagingParameters : PagingParametersBase
     {
