@@ -28,6 +28,15 @@ namespace cams.MongoDBConnector.Users
         }
 
         /// <summary>
+        /// Create a new instance of <see cref="UserRepository"/>.
+        /// </summary>
+        /// <param name="session">The MongoDB session.</param>
+        public UserRepository(MongoDBSession session)
+            : base(session)
+        {
+        }
+
+        /// <summary>
         /// Get a list of <see cref="User"/>.
         /// </summary>
         /// <param name="lang">The language.</param>

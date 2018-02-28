@@ -12,6 +12,10 @@ namespace cams.MongoDBConnector.Sessions
     /// </summary>
     public interface IMongoDBSession : ISession
     {
+        void CreateCollection(string name);
+
+        void DeleteCollection(string name);
+
         /// <summary>
         /// Gets a <see cref="MongoDBPagedCollection"/> from database.
         /// </summary>

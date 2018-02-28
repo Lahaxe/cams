@@ -50,6 +50,15 @@ namespace cams.MongoDBConnector.Core
         }
 
         /// <summary>
+        /// Initialize a new instance of <see cref="RepositoryBase"/>.
+        /// </summary>
+        /// <param name="session">The MongoDB session.</param>
+        protected RepositoryBase(MongoDBSession session)
+        {
+            _session = session;
+        }
+
+        /// <summary>
         /// Disposes the repository.
         /// </summary>
         public void Dispose()

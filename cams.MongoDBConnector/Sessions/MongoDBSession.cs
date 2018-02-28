@@ -59,6 +59,30 @@ namespace cams.MongoDBConnector.Sessions
         }
 
         /// <summary>
+        /// Creates a new collection.
+        /// </summary>
+        /// <param name="name">Name of the new collection.</param>
+        public void CreateCollection(string name)
+        {
+            if (_database.GetCollection<BsonDocument>(name) == null)
+            {
+                _database.CreateCollection(name);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a collection.
+        /// </summary>
+        /// <param name="name">Name of the collection.</param>
+        public void DeleteCollection(string name)
+        {
+            if (_database.GetCollection<BsonDocument>(name) != null)
+            {
+                _database.DropCollection(name);
+            }
+        }
+
+        /// <summary>
         /// Gets a <see cref="MongoDBPagedCollection"/> from database.
         /// </summary>
         /// <param name="collectionName">Name of the collection.</param>
