@@ -1,6 +1,8 @@
 ﻿using cams.model.Users;
 using cams.MongoDBConnector.Core;
 using MongoDB.Bson;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace cams.MongoDBConnector.Users
 {
@@ -40,6 +42,19 @@ namespace cams.MongoDBConnector.Users
             user.ToBsonDocumentBase(ref bson);
 
             bson.Add("name", user.Name);
+        }
+
+        /// <summary>
+        /// Converts a list of <see cref="BsonDocument"/> to a list of <see cref="User"/>.
+        /// </summary>
+        /// <param name="bsons">List to convert.</param>
+        /// <returns>The converted list.</returns>
+        public static IEnumerable<User> ToUserList(this IEnumerable<BsonDocument> bsons)
+        {
+            var result = new List<User>();
+            bsons.ToList().ForEach(bson => result.Add(bson.ToUser()));
+
+            return result;
         }
     }
 }

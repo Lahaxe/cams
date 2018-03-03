@@ -7,20 +7,464 @@
 	},
 	"item": [
 		{
-			"name": "Users",
+			"name": "Authentification",
 			"description": "",
 			"item": [
 				{
-					"name": "{id}",
+					"name": "token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9e79ce26-c139-440c-a644-7fe6b63fd302",
+								"type": "text/javascript",
+								"exec": [
+									"postman.clearEnvironmentVariable(\"token\");",
+									"postman.clearEnvironmentVariable(\"token_type\");",
+									"postman.clearEnvironmentVariable(\"username\");",
+									"postman.clearEnvironmentVariable(\"lang\");"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "db45e947-201e-4359-982e-60885d04e1f2",
+								"type": "text/javascript",
+								"exec": [
+									"// Test Response status code",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Test if response body is a json",
+									"pm.test(\"Response is a JSON\", function () { ",
+									"    pm.response.to.not.be.error; ",
+									"    pm.response.to.have.jsonBody(\"\"); ",
+									"    pm.response.to.not.have.jsonBody(\"error\"); ",
+									"});",
+									"",
+									"pm.test(\"Token is valid\", function () { ",
+									"    var data = JSON.parse(responseBody);",
+									"    if (data.access_token === undefined && data.access_token === null) {",
+									"        throw { message : \"Token is not valid\" };",
+									"    }",
+									"    postman.setEnvironmentVariable(\"token\", data.access_token);",
+									"    postman.setEnvironmentVariable(\"token_type\", data.token_type);",
+									"});",
+									"",
+									"pm.test(\"Lang is valid\", function () { ",
+									"    var data = pm.response.json();",
+									"    if (data.lang === undefined && data.lang === null) {",
+									"        throw { message : \"Lang is not valid\" };",
+									"    }",
+									"    postman.setEnvironmentVariable(\"lang\", data.lang);",
+									"});",
+									"",
+									"pm.test(\"Username is valid\", function () { ",
+									"    var data = JSON.parse(responseBody);",
+									"    if (data.username === undefined && data.username === null) {",
+									"        throw { message : \"Username is not valid\" };",
+									"    }",
+									"    postman.setEnvironmentVariable(\"username\", data.username);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/token",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"token"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API",
+			"description": "",
+			"item": [
+				{
+					"name": "Users",
 					"description": "",
 					"item": [
+						{
+							"name": "{id}",
+							"description": "",
+							"item": [
+								{
+									"name": "user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "64d49b54-b797-4f87-83ca-908b141cc574",
+												"type": "text/javascript",
+												"exec": [
+													"// Test Response status code",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"// Test if response body is a json",
+													"pm.test(\"Response is a JSON\", function () { ",
+													"    pm.response.to.not.be.error; ",
+													"    pm.response.to.have.jsonBody(\"\"); ",
+													"    pm.response.to.not.have.jsonBody(\"error\"); ",
+													"});",
+													"",
+													"// Test User structure",
+													"pm.test(\"Structure of User\", function () {",
+													"    var data = pm.response.json();",
+													"    ",
+													"    if (data.id !== undefined && data.id !== null) {",
+													"        throw { message : \"'id' is missing in User structure\" };",
+													"    }",
+													"    ",
+													"    if (data.name !== undefined && data.name !== null) {",
+													"        throw { message : \"'name' is missing in User structure\" };",
+													"    }",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}"
+											}
+										],
+										"body": {},
+										"url": {
+											"raw": "{{server}}:{{port}}/{{baseURL}}/users/5a8b43aded48162fe4d8df49",
+											"host": [
+												"{{server}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{baseURL}}",
+												"users",
+												"5a8b43aded48162fe4d8df49"
+											]
+										},
+										"description": ""
+									},
+									"response": []
+								},
+								{
+									"name": "user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "01ac765c-b540-494d-8cf2-d0038cbff9f7",
+												"type": "text/javascript",
+												"exec": [
+													"// Test Response status code",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}"
+											}
+										],
+										"body": {},
+										"url": {
+											"raw": "{{server}}:{{port}}/{{baseURL}}/users/5a8c8358ed48162098959559",
+											"host": [
+												"{{server}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{baseURL}}",
+												"users",
+												"5a8c8358ed48162098959559"
+											]
+										},
+										"description": ""
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    var containsPageIndex = (data.pageIndex !== undefined && data.pageIndex !== null);",
+											"    var containsPageSize = (data.pageSize !== undefined && data.pageSize !== null);",
+											"    var containsTotalNumberOfItems = (data.totalNumberOfItems !== undefined && data.totalNumberOfItems !== null);",
+											"    var containsTotalNumberOfPages = (data.totalNumberOfPages !== undefined && data.totalNumberOfPages !== null);",
+											"    var containsItem = (data.items !== undefined && data.items !== null);",
+											"    ",
+											"    if (!containsItem || !containsPageIndex || !containsPageSize || !containsTotalNumberOfItems || !containsTotalNumberOfPages) {",
+											"        throw { message : \"Response structure is not a PagedCollection\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - paging",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    var containsPageIndex = (data.pageIndex !== undefined && data.pageIndex !== null);",
+											"    var containsPageSize = (data.pageSize !== undefined && data.pageSize !== null);",
+											"    var containsTotalNumberOfItems = (data.totalNumberOfItems !== undefined && data.totalNumberOfItems !== null);",
+											"    var containsTotalNumberOfPages = (data.totalNumberOfPages !== undefined && data.totalNumberOfPages !== null);",
+											"    var containsItem = (data.items !== undefined && data.items !== null);",
+											"    ",
+											"    if (!containsItem || !containsPageIndex || !containsPageSize || !containsTotalNumberOfItems || !containsTotalNumberOfPages) {",
+											"        throw { message : \"Response structure is not a PagedCollection\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&paging={{parameters-paging}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "paging",
+											"value": "{{parameters-paging}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - sorting",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    var containsPageIndex = (data.pageIndex !== undefined && data.pageIndex !== null);",
+											"    var containsPageSize = (data.pageSize !== undefined && data.pageSize !== null);",
+											"    var containsTotalNumberOfItems = (data.totalNumberOfItems !== undefined && data.totalNumberOfItems !== null);",
+											"    var containsTotalNumberOfPages = (data.totalNumberOfPages !== undefined && data.totalNumberOfPages !== null);",
+											"    var containsItem = (data.items !== undefined && data.items !== null);",
+											"    ",
+											"    if (!containsItem || !containsPageIndex || !containsPageSize || !containsTotalNumberOfItems || !containsTotalNumberOfPages) {",
+											"        throw { message : \"Response structure is not a PagedCollection\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&sorting={{parameters-sorting}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "sorting",
+											"value": "{{parameters-sorting}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
 						{
 							"name": "user",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
-										"id": "64d49b54-b797-4f87-83ca-908b141cc574",
+										"id": "c59616c3-af17-4de6-a387-d46a7aaf3394",
 										"type": "text/javascript",
 										"exec": [
 											"// Test Response status code",
@@ -52,6 +496,187 @@
 								}
 							],
 							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"TestPostUser\",\n\t\"id\": \"\"\n}"
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3e10f17b-946f-4ad0-b22b-bdfe8f6b598f",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"TestPatchUser\",\n\t\"id\": \"5a8b43aded48162fe4d8df49\"\n}"
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c15f71dd-8151-40e7-9f89-d56cb413c8b3",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t\"5a8c833ded48162098959558\",\n\t\"5a8c8462ed48162e608ae2dd\"\n]"
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7a28d239-92f2-41c4-bd45-f2371b4a27d4",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e65b41f8-cf6a-48c8-902c-28d09f50d4b8",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Items",
+					"description": "",
+					"item": [
+						{
+							"name": "items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bfcad1cb-8d0d-4ed6-9487-8b0c634690d4",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											""
+										]
+									}
+								}
+							],
+							"request": {
 								"method": "GET",
 								"header": [
 									{
@@ -61,15 +686,14 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "{{server}}:{{port}}/{{baseURL}}/users/5a8b43aded48162fe4d8df49",
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
 									"host": [
 										"{{server}}"
 									],
 									"port": "{{port}}",
 									"path": [
 										"{{baseURL}}",
-										"users",
-										"5a8b43aded48162fe4d8df49"
+										"users"
 									]
 								},
 								"description": ""
@@ -80,376 +704,448 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "users",
-					"event": [
+					"name": "Collections",
+					"description": "",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "d64f9c63-3e31-4311-8017-5b6a136b70db",
-								"type": "text/javascript",
-								"exec": [
-									"// Test Response status code",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"// Test if response body is a json",
-									"pm.test(\"Response is a JSON\", function () { ",
-									"    pm.response.to.not.be.error; ",
-									"    pm.response.to.have.jsonBody(\"\"); ",
-									"    pm.response.to.not.have.jsonBody(\"error\"); ",
-									"});",
-									"",
-									"// Test PagedCollection structure",
-									"pm.test(\"Structure of PagedCollection\", function () {",
-									"    var data = pm.response.json();",
-									"    ",
-									"    var containsPageIndex = (data.pageIndex !== undefined && data.pageIndex !== null);",
-									"    var containsPageSize = (data.pageSize !== undefined && data.pageSize !== null);",
-									"    var containsTotalNumberOfItems = (data.totalNumberOfItems !== undefined && data.totalNumberOfItems !== null);",
-									"    var containsTotalNumberOfPages = (data.totalNumberOfPages !== undefined && data.totalNumberOfPages !== null);",
-									"    var containsItem = (data.items !== undefined && data.items !== null);",
-									"    ",
-									"    if (!containsItem || !containsPageIndex || !containsPageSize || !containsTotalNumberOfItems || !containsTotalNumberOfPages) {",
-									"        throw { message : \"Response structure is not a PagedCollection\" };",
-									"    }",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
-							"host": [
-								"{{server}}"
+							"name": "collections",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b8d92338-e170-4a9b-86e4-02549d26f5d8",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON\", function () { ",
+											"    pm.response.to.not.be.error; ",
+											"    pm.response.to.have.jsonBody(\"\"); ",
+											"    pm.response.to.not.have.jsonBody(\"error\"); ",
+											"});",
+											""
+										]
+									}
+								}
 							],
-							"port": "{{port}}",
-							"path": [
-								"{{baseURL}}",
-								"users"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c59616c3-af17-4de6-a387-d46a7aaf3394",
-								"type": "text/javascript",
-								"exec": [
-									"// Test Response status code",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"// Test if response body is a json",
-									"pm.test(\"Response is a JSON\", function () { ",
-									"    pm.response.to.not.be.error; ",
-									"    pm.response.to.have.jsonBody(\"\"); ",
-									"    pm.response.to.not.have.jsonBody(\"error\"); ",
-									"});",
-									"",
-									"// Test User structure",
-									"pm.test(\"Structure of User\", function () {",
-									"    var data = pm.response.json();",
-									"    ",
-									"    if (data.id !== undefined && data.id !== null) {",
-									"        throw { message : \"'id' is missing in User structure\" };",
-									"    }",
-									"    ",
-									"    if (data.name !== undefined && data.name !== null) {",
-									"        throw { message : \"'name' is missing in User structure\" };",
-									"    }",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									]
+								},
+								"description": ""
 							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"TestPostUser\",\n\t\"id\": \"\"\n}"
-						},
-						"url": {
-							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
-							"host": [
-								"{{server}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"{{baseURL}}",
-								"users"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "7a28d239-92f2-41c4-bd45-f2371b4a27d4",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "e65b41f8-cf6a-48c8-902c-28d09f50d4b8",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
 		{
-			"name": "Items",
+			"name": "Error",
 			"description": "",
 			"item": [
 				{
-					"name": "items",
-					"event": [
+					"name": "Users",
+					"description": "",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "bfcad1cb-8d0d-4ed6-9487-8b0c634690d4",
-								"type": "text/javascript",
-								"exec": [
-									"// Test Response status code",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"// Test if response body is a json",
-									"pm.test(\"Response is a JSON\", function () { ",
-									"    pm.response.to.not.be.error; ",
-									"    pm.response.to.have.jsonBody(\"\"); ",
-									"    pm.response.to.not.have.jsonBody(\"error\"); ",
-									"});",
-									""
-								]
-							}
+							"name": "users - 400 - Paging",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "897ec345-4dec-4037-ada2-1b46469254ea",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON error\", function () { ",
+											"    pm.response.to.be.error;",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.message === undefined || data.message === null) {",
+											"        throw { message : \"Response structure is not an error\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&paging={{parameters-paging-bad}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "paging",
+											"value": "{{parameters-paging-bad}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - 400 - Sorting",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "897ec345-4dec-4037-ada2-1b46469254ea",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON error\", function () { ",
+											"    pm.response.to.be.error;",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.message === undefined || data.message === null) {",
+											"        throw { message : \"Response structure is not an error\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&sorting={{parameters-sorting-bad}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "sorting",
+											"value": "{{parameters-sorting-bad}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - 400 - Filtering",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "897ec345-4dec-4037-ada2-1b46469254ea",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON error\", function () { ",
+											"    pm.response.to.be.error;",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.message === undefined || data.message === null) {",
+											"        throw { message : \"Response structure is not an error\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&filtering={{parameters-filtering-bad}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "filtering",
+											"value": "{{parameters-filtering-bad}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - 400 - Fielding",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "897ec345-4dec-4037-ada2-1b46469254ea",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON error\", function () { ",
+											"    pm.response.to.be.error;",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.message === undefined || data.message === null) {",
+											"        throw { message : \"Response structure is not an error\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users?lang={{lang}}&fielding={{parameters-fielding-bad}}",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "lang",
+											"value": "{{lang}}",
+											"equals": true
+										},
+										{
+											"key": "fielding",
+											"value": "{{parameters-fielding-bad}}",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - 401 - No token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5459f446-7be8-4a7b-8fa7-fe86f63370fd",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON error\", function () { ",
+											"    pm.response.to.be.error;",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.message === undefined || data.message === null) {",
+											"        throw { message : \"Response structure is not an error\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "users - 401 - Bad token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5459f446-7be8-4a7b-8fa7-fe86f63370fd",
+										"type": "text/javascript",
+										"exec": [
+											"// Test Response status code",
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"// Test if response body is a json",
+											"pm.test(\"Response is a JSON error\", function () { ",
+											"    pm.response.to.be.error;",
+											"});",
+											"",
+											"// Test PagedCollection structure",
+											"pm.test(\"Structure of PagedCollection\", function () {",
+											"    var data = pm.response.json();",
+											"    ",
+											"    if (data.message === undefined || data.message === null) {",
+											"        throw { message : \"Response structure is not an error\" };",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer bad-token"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{server}}:{{port}}/{{baseURL}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{baseURL}}",
+										"users"
+									]
+								},
+								"description": ""
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
-							"host": [
-								"{{server}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"{{baseURL}}",
-								"users"
-							]
-						},
-						"description": ""
-					},
-					"response": []
+					"_postman_isSubFolder": true
 				}
 			]
-		},
-		{
-			"name": "Collections",
-			"description": "",
-			"item": [
-				{
-					"name": "collections",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "b8d92338-e170-4a9b-86e4-02549d26f5d8",
-								"type": "text/javascript",
-								"exec": [
-									"// Test Response status code",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"// Test if response body is a json",
-									"pm.test(\"Response is a JSON\", function () { ",
-									"    pm.response.to.not.be.error; ",
-									"    pm.response.to.have.jsonBody(\"\"); ",
-									"    pm.response.to.not.have.jsonBody(\"error\"); ",
-									"});",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "{{server}}:{{port}}/{{baseURL}}/users",
-							"host": [
-								"{{server}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"{{baseURL}}",
-								"users"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "token",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "9e79ce26-c139-440c-a644-7fe6b63fd302",
-						"type": "text/javascript",
-						"exec": [
-							"postman.clearEnvironmentVariable(\"token\");",
-							"postman.clearEnvironmentVariable(\"token_type\");",
-							"postman.clearEnvironmentVariable(\"username\");",
-							"postman.clearEnvironmentVariable(\"lang\");"
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "db45e947-201e-4359-982e-60885d04e1f2",
-						"type": "text/javascript",
-						"exec": [
-							"// Test Response status code",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"// Test if response body is a json",
-							"pm.test(\"Response is a JSON\", function () { ",
-							"    pm.response.to.not.be.error; ",
-							"    pm.response.to.have.jsonBody(\"\"); ",
-							"    pm.response.to.not.have.jsonBody(\"error\"); ",
-							"});",
-							"",
-							"pm.test(\"Token is valid\", function () { ",
-							"    var data = JSON.parse(responseBody);",
-							"    if (data.access_token === undefined && data.access_token === null) {",
-							"        throw { message : \"Token is not valid\" };",
-							"    }",
-							"    postman.setEnvironmentVariable(\"token\", data.access_token);",
-							"    postman.setEnvironmentVariable(\"token_type\", data.token_type);",
-							"});",
-							"",
-							"pm.test(\"Lang is valid\", function () { ",
-							"    var data = pm.response.json();",
-							"    if (data.lang === undefined && data.lang === null) {",
-							"        throw { message : \"Lang is not valid\" };",
-							"    }",
-							"    postman.setEnvironmentVariable(\"lang\", data.lang);",
-							"});",
-							"",
-							"pm.test(\"Username is valid\", function () { ",
-							"    var data = JSON.parse(responseBody);",
-							"    if (data.username === undefined && data.username === null) {",
-							"        throw { message : \"Username is not valid\" };",
-							"    }",
-							"    postman.setEnvironmentVariable(\"username\", data.username);",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "{{login}}",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{server}}:{{port}}/token",
-					"host": [
-						"{{server}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"token"
-					]
-				},
-				"description": ""
-			},
-			"response": []
 		}
 	],
 	"event": [

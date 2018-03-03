@@ -6,12 +6,19 @@ using System.Web.Http;
 
 namespace cams
 {
+    /// <summary>
+    /// Defines the API configuration.
+    /// </summary>
     public static class WebApiConfig
     {
+        /// <summary>
+        /// Registers the configuration.
+        /// </summary>
+        /// <param name="config">The Web configuration.</param>
         public static void Register(HttpConfiguration config)
         {
             // Configuration et services API Web
-            
+
             // Configurer l'API Web pour utiliser uniquement l'authentification de jeton du porteur.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));

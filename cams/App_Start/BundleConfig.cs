@@ -2,6 +2,9 @@
 
 namespace cams
 {
+    /// <summary>
+    /// Defines the bundle configuration.
+    /// </summary>
     public class BundleConfig
     {
         // Pour plus d'informations sur le regroupement, visitez https://go.microsoft.com/fwlink/?LinkId=301862

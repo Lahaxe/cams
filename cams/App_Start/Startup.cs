@@ -18,8 +18,15 @@ using Unity.Injection;
 
 namespace cams
 {
+    /// <summary>
+    /// Defines the entry point.
+    /// </summary>
     public partial class Startup
     {
+        /// <summary>
+        /// Configures the application.
+        /// </summary>
+        /// <param name="app">The application.</param>
         public void Configuration(IAppBuilder app)
         {
             //Dependency injection container

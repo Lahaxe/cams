@@ -8,6 +8,9 @@ using System;
 
 namespace cams
 {
+    /// <summary>
+    /// Defines the startup.
+    /// </summary>
     public partial class Startup
     {
         /// <summary>
@@ -20,10 +23,14 @@ namespace cams
         /// </summary>
         public static string PublicClientId { get; private set; }
 
+        /// <summary>
+        /// Configures the OAuth.
+        /// </summary>
+        /// <param name="app"></param>
         public static void ConfigureOAuth(IAppBuilder app)
         {
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseCookieAuthentication(new CookieAuthenticationOptions());

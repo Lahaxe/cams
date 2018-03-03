@@ -69,10 +69,16 @@
     <Compile Include="Items\ItemRepository.cs" />
     <Compile Include="Items\Stamps\StampRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryParameters\FilterExtensions.cs" />
     <Compile Include="Sessions\IMongoDBSession.cs" />
     <Compile Include="Sessions\IMongoDBSessionFactory.cs" />
+    <Compile Include="QueryParameters\MongoDBFilteringParametersExtensions.cs" />
+    <Compile Include="Core\MongoDBPagedCollection.cs" />
+    <Compile Include="QueryParameters\MongoDBPagingParameters.cs" />
+    <Compile Include="QueryParameters\MongoDBPagingParametersExtensions.cs" />
     <Compile Include="Sessions\MongoDBSession.cs" />
     <Compile Include="Sessions\MongoDBSessionFactory.cs" />
+    <Compile Include="QueryParameters\MongoDBSortingParametersExtensions.cs" />
     <Compile Include="Users\UserExtensions.cs" />
     <Compile Include="Users\UserRepository.cs" />
   </ItemGroup>

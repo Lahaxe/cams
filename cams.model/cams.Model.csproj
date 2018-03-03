@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,10 +60,31 @@
     <Compile Include="Items\Stamps\IStampRepository.cs" />
     <Compile Include="Items\Stamps\Stamp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryParameters\Fields\Field.cs" />
+    <Compile Include="QueryParameters\Fields\FieldingParametersBase.cs" />
+    <Compile Include="QueryParameters\Fields\FieldingParametersConverter.cs" />
+    <Compile Include="QueryParameters\Fields\FieldingParameters.cs" />
+    <Compile Include="QueryParameters\Fields\FieldingVisibility.cs" />
+    <Compile Include="QueryParameters\Filters\Filter.cs" />
+    <Compile Include="QueryParameters\Filters\FilteringParameters.cs" />
+    <Compile Include="QueryParameters\Filters\FilteringParametersBase.cs" />
+    <Compile Include="QueryParameters\Filters\FilteringParametersConverter.cs" />
+    <Compile Include="QueryParameters\Filters\FilterOperator.cs" />
+    <Compile Include="QueryParameters\Pages\PagingParameters.cs" />
+    <Compile Include="QueryParameters\Pages\PagingParametersBase.cs" />
+    <Compile Include="QueryParameters\Pages\PagingParametersConverter.cs" />
+    <Compile Include="QueryParameters\Sorts\Sort.cs" />
+    <Compile Include="QueryParameters\Sorts\SortingDirection.cs" />
+    <Compile Include="QueryParameters\Sorts\SortingParameters.cs" />
+    <Compile Include="QueryParameters\Sorts\SortingParametersBase.cs" />
+    <Compile Include="QueryParameters\Sorts\SortingParametersConverter.cs" />
     <Compile Include="Users\IUserRepository.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Users\UserNotFoundException.cs" />
     <Compile Include="Users\UserRole.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

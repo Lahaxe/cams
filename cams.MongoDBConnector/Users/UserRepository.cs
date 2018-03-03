@@ -1,6 +1,11 @@
 ﻿using cams.model.Core;
+using cams.model.QueryParameters.Fields;
+using cams.model.QueryParameters.Filters;
+using cams.model.QueryParameters.Pages;
+using cams.model.QueryParameters.Sorts;
 using cams.model.Users;
 using cams.MongoDBConnector.Core;
+using cams.MongoDBConnector.QueryParameters;
 using cams.MongoDBConnector.Sessions;
 using MongoDB.Bson;
 using System;
@@ -16,38 +21,53 @@ namespace cams.MongoDBConnector.Users
         /// <summary>
         /// Create a new instance of <see cref="UserRepository"/>.
         /// </summary>
-        /// <param name="factory">The mongodb session factory.</param>
+        /// <param name="factory">The MongoDB session factory.</param>
         public UserRepository(IMongoDBSessionFactory factory)
             : base(factory)
         {
         }
 
         /// <summary>
+        /// Create a new instance of <see cref="UserRepository"/>.
+        /// </summary>
+        /// <param name="session">The MongoDB session.</param>
+        public UserRepository(MongoDBSession session)
+            : base(session)
+        {
+        }
+
+        /// <summary>
         /// Get a list of <see cref="User"/>.
         /// </summary>
+        /// <param name="lang">The language.</param>
+        /// <param name="paging">The paging parameters.</param>
+        /// <param name="sorting">The sorting parameters.</param>
+        /// <param name="filtering">The filtering parameters.</param>
+        /// <param name="fielding">The fielding parameters. (not used)</param>
         /// <returns>The pagined list of <see cref="User"/>.</returns>
-        public PagedCollection<User> GetUsers()
+        public PagedCollection<User> GetUsers(string lang,
+                                              PagingParameters paging,
+                                              SortingParameters sorting,
+                                              FilteringParameters filtering,
+                                              FieldingParameters fielding)
         {
             if (Session == null)
             {
                 throw new Exception("Session is null");
             }
 
-            var result = Session.Read("users");
-
-            var users = new List<User>();
-            foreach (BsonDocument doc in result)
-            {
-                users.Add(doc.ToUser());
-            }
+            var result = Session.Read("users",
+                                      paging.ToMDBPagingParameters(),
+                                      sorting.ToSortDefinition(),
+                                      filtering.ToFilterDefinition());
 
             return new PagedCollection<User>
             {
-                Items = users,
-                TotalNumberOfItems = users.Count,
-                PageIndex = 1,
-                PageSize = users.Count,
-                TotalNumberOfPages = 1
+                Items = result.Items.ToUserList(),
+                TotalNumberOfItems = result.TotalNumberOfItems,
+                PageIndex = paging.Index,
+                PageSize = paging.Size,
+                TotalNumberOfPages = (long)Math.Ceiling(result.TotalNumberOfItems / (double)paging.Size)
             };
         }
 
@@ -93,6 +113,52 @@ namespace cams.MongoDBConnector.Users
 
             // Read the created user
             return GetUser(doc.GetElement("_id").Value.AsObjectId.ToString());
+        }
+
+        /// <summary>
+        /// Updates an <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user to update.</param>
+        public void PatchUser(User user)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+        }
+
+        /// <summary>
+        /// Deletes an <see cref="User"/>.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        public void DeleteUser(string id)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+
+            Session.Delete("users", new EntityBase { Id = id });
+        }
+
+        /// <summary>
+        /// Deletes <see cref="User"/>.
+        /// </summary>
+        /// <param name="ids">List of user identifiers.</param>
+        public void DeleteUsers(IList<string> ids)
+        {
+            if (Session == null)
+            {
+                throw new Exception("Session is null");
+            }
+
+            IList<EntityBase> entities = new List<EntityBase>();
+            foreach (var id in ids)
+            {
+                entities.Add(new EntityBase { Id = id });
+            }
+
+            Session.Delete("users", entities);
         }
     }
 }
