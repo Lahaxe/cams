@@ -29,8 +29,13 @@ namespace cams.MongoDBConnector.Sessions
                                     SortDefinition<BsonDocument> sorting,
                                     FilterDefinition<BsonDocument> filtering = null);
 
-        // TODO
-        BsonDocument Read(string collectionName, EntityBase entity);
+        /// <summary>
+        /// Gets the document corresponding to a given filter.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">The filtering parameters.</param>
+        /// <returns>The requested document.</returns>
+        BsonDocument Read(string collectionName, BsonDocument bsonDocument);
 
         // TODO
         void Create(string collectionName, BsonDocument doc);

@@ -83,7 +83,10 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            var result = Session.Read("users", new EntityBase { Id = id });
+            var entity = new EntityBase { Id = id };
+            var bson = new BsonDocument();
+            entity.ToBsonDocumentBase(ref bson);
+            var result = Session.Read("users", bson);
 
             if (result == null || result.IsBsonNull)
             {
