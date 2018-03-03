@@ -29,16 +29,29 @@ namespace cams.MongoDBConnector.Sessions
                                     SortDefinition<BsonDocument> sorting,
                                     FilterDefinition<BsonDocument> filtering = null);
 
-        // TODO
-        BsonDocument Read(string collectionName, EntityBase entity);
+        /// <summary>
+        /// Gets the document corresponding to a given filter.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">The filtering parameters.</param>
+        /// <returns>The requested document.</returns>
+        BsonDocument Read(string collectionName, BsonDocument bsonDocument);
 
         // TODO
         void Create(string collectionName, BsonDocument doc);
 
-        // TODO
-        void Delete(string collectionName, EntityBase entity);
+        /// <summary>
+        /// Deletes a document.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">The bson to delete.</param>
+        void Delete(string collectionName, BsonDocument bsonDocument);
 
-        // TODO
-        void Delete(string collectionName, IList<EntityBase> entities);
+        /// <summary>
+        /// Deletes a list of documents.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">The bson documents to delete.</param>
+        void Delete(string collectionName, IList<BsonDocument> bsonDocuments);
     }
 }

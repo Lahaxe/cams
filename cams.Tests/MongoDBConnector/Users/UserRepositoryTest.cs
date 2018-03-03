@@ -189,5 +189,40 @@ namespace cams.Tests.MongoDBConnector.Users
             Assert.AreEqual(1, (result.Items as List<User>).Count);
             Assert.AreEqual("user03", (result.Items as List<User>)[0].Name);
         }
+
+        /// <summary>
+        /// Test function GetUser.
+        /// </summary>
+        [TestMethod]
+        public void TestUserRepositoryGetUser()
+        {
+            Assert.IsNotNull(Repository);
+
+            var result = Repository.GetUser("5a9a7e3fbb0d0f8e7382a6e9");
+            Assert.IsNotNull(result);
+            Assert.AreEqual("user01", result.Name);
+        }
+
+        /// <summary>
+        /// Test function Delete.
+        /// </summary>
+        [TestMethod]
+        public void TestUserRepositoryDeleteUser()
+        {
+            Assert.IsNotNull(Repository);
+
+            Repository.DeleteUser("5a9a7e3fbb0d0f8e7382a6e9");
+        }
+
+        /// <summary>
+        /// Test function Delete.
+        /// </summary>
+        [TestMethod]
+        public void TestUserRepositoryDeleteUsers()
+        {
+            Assert.IsNotNull(Repository);
+
+            Repository.DeleteUsers(new List<string> { "5a9a9bac1228bc8d3f74797c", "5a9a7e51bb0d0f8e7382a6ed" });
+        }
     }
 }

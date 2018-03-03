@@ -83,7 +83,10 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            var result = Session.Read("users", new EntityBase { Id = id });
+            var entity = new EntityBase { Id = id };
+            var bson = new BsonDocument();
+            entity.ToBsonDocumentBase(ref bson);
+            var result = Session.Read("users", bson);
 
             if (result == null || result.IsBsonNull)
             {
@@ -138,7 +141,11 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            Session.Delete("users", new EntityBase { Id = id });
+            var entity = new EntityBase { Id = id };
+            var bson = new BsonDocument();
+            entity.ToBsonDocumentBase(ref bson);
+
+            Session.Delete("users", bson);
         }
 
         /// <summary>
@@ -152,13 +159,16 @@ namespace cams.MongoDBConnector.Users
                 throw new Exception("Session is null");
             }
 
-            IList<EntityBase> entities = new List<EntityBase>();
+            var bsons = new List<BsonDocument>();
             foreach (var id in ids)
             {
-                entities.Add(new EntityBase { Id = id });
+                var entity = new EntityBase { Id = id };
+                var bson = new BsonDocument();
+                entity.ToBsonDocumentBase(ref bson);
+                bsons.Add(bson);
             }
 
-            Session.Delete("users", entities);
+            Session.Delete("users", bsons);
         }
     }
 }
