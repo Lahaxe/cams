@@ -137,22 +137,28 @@ namespace cams.MongoDBConnector.Sessions
             collection.InsertOneAsync(doc).Wait();
         }
 
-        // TODO
-        public void Delete(string collectionName, EntityBase entity)
+        /// <summary>
+        /// Deletes a document.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">The bson to delete.</param>
+        public void Delete(string collectionName, BsonDocument bsonDocument)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
-            BsonDocument bson = null;
-            entity.ToBsonDocumentBase(ref bson);
-            var result = collection.DeleteManyAsync(bson);
+            var result = collection.DeleteManyAsync(bsonDocument);
             result.Wait();
         }
 
-        // TODO
-        public void Delete(string collectionName, IList<EntityBase> entities)
+        /// <summary>
+        /// Deletes a list of documents.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">The bson documents to delete.</param>
+        public void Delete(string collectionName, IList<BsonDocument> bsonDocuments)
         {
-            foreach (var entity in entities)
+            foreach (var bson in bsonDocuments)
             {
-                Delete(collectionName, entity);
+                Delete(collectionName, bson);
             }
         }
     }
