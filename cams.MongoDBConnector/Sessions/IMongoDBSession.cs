@@ -37,8 +37,16 @@ namespace cams.MongoDBConnector.Sessions
         /// <returns>The requested document.</returns>
         BsonDocument Read(string collectionName, BsonDocument bsonDocument);
 
-        // TODO
-        void Create(string collectionName, BsonDocument doc);
+        /// <summary>
+        /// Creates a new document.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">Document to create.</param>
+        void Create(string collectionName, BsonDocument bsonDocument);
+
+        BsonDocument Update(string collectionName, 
+                            FilterDefinition<BsonDocument> filtering,
+                            UpdateDefinition<BsonDocument> update);
 
         /// <summary>
         /// Deletes a document.

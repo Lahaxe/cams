@@ -10,6 +10,7 @@ using cams.MongoDBConnector.Sessions;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace cams.MongoDBConnector.Users
 {
@@ -127,6 +128,25 @@ namespace cams.MongoDBConnector.Users
             if (Session == null)
             {
                 throw new Exception("Session is null");
+            }
+
+            var filter = new FilteringParameters
+            {
+                Filter = new Filter
+                {
+                    Operator = FilterOperator.Equal,
+                    Attribute = "_id",
+                    Value = ObjectId.Parse(user.Id)
+                }
+            };
+
+            var result= Session.Update("users", 
+                filter.ToFilterDefinition(), 
+                user.ToUpdateBsonDocument(false));
+
+            if (result == null)
+            {
+                throw new UserNotFoundException();
             }
         }
 

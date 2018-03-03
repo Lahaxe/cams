@@ -1,6 +1,7 @@
 ﻿using cams.model.Users;
 using cams.MongoDBConnector.Core;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,11 +38,34 @@ namespace cams.MongoDBConnector.Users
         /// </summary>
         /// <param name="user">The <see cref="User"/> to convert.</param>
         /// <param name="bson">The converted document.</param>
-        public static void ToBsonDocument(this User user, ref BsonDocument bson)
+        /// <param name="insertNull">Flag indicating if null value should be insert.</param>
+        public static void ToBsonDocument(this User user, ref BsonDocument bson, bool insertNull = true)
         {
             user.ToBsonDocumentBase(ref bson);
 
-            bson.Add("name", user.Name);
+            if (user.Name != null)
+            {
+                bson.Add("name", user.Name);
+            }
+            else if (insertNull)
+            {
+                bson.Add("name", BsonNull.Value);
+            }
+        }
+
+        public static UpdateDefinition<BsonDocument> ToUpdateBsonDocument(this User user, bool insertNull = true)
+        {
+            var changeList = new List<UpdateDefinition<BsonDocument>>();
+            if (user.Name != null)
+            {
+                changeList.Add(Builders<BsonDocument>.Update.Set("name", user.Name));
+            }
+            else if (insertNull)
+            {
+                changeList.Add(Builders<BsonDocument>.Update.Set("name", BsonNull.Value));
+            }
+
+            return Builders<BsonDocument>.Update.Combine(changeList);
         }
 
         /// <summary>

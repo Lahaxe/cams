@@ -1,5 +1,4 @@
-﻿using cams.model.Core;
-using cams.MongoDBConnector.Core;
+﻿using cams.MongoDBConnector.Core;
 using cams.MongoDBConnector.QueryParameters;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -130,11 +129,26 @@ namespace cams.MongoDBConnector.Sessions
             return result.Result;
         }
 
-        // TODO
-        public void Create(string collectionName, BsonDocument doc)
+        /// <summary>
+        /// Creates a new document.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="bsonDocument">Document to create.</param>
+        public void Create(string collectionName, BsonDocument bsonDocument)
         {
             var collection = _database.GetCollection<BsonDocument>(collectionName);
-            collection.InsertOneAsync(doc).Wait();
+            collection.InsertOneAsync(bsonDocument).Wait();
+        }
+
+        public BsonDocument Update(
+            string collectionName, 
+            FilterDefinition<BsonDocument> filtering,
+            UpdateDefinition<BsonDocument> update)
+        {
+            var collection = _database.GetCollection<BsonDocument>(collectionName);
+            var result = collection.FindOneAndUpdateAsync(filtering, update);
+            result.Wait();
+            return result.Result;
         }
 
         /// <summary>
